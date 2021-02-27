@@ -40,7 +40,7 @@ import model.ImageType;
 
 public class AppController {
 
-	CardData currentCard = new CardData();
+	CardData currentCard;
 	@FXML
 	Pane cardPane;
 	@FXML
@@ -90,7 +90,11 @@ public class AppController {
 	Label label_3;
 	@FXML
 	Label label_4;
-
+	
+	public AppController() {
+		currentCard = new CardData();
+	}
+	
 	private BufferedImage bufferImage;
 
 	public void importAsset(ActionEvent event) {
@@ -169,7 +173,10 @@ public class AppController {
 		FXUtil.showWIP(); // TODO
 		File file = fc.showOpenDialog(new Stage());
 		if (file != null) {
-			
+			currentCard = DataUtil.load(file.getPath());
+			if (currentCard != null) {
+				
+			}
 		}
 	}
 	
