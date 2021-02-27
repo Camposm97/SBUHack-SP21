@@ -41,7 +41,11 @@ public class AppController {
 	ColorPicker bg_colorPicker;
 	@FXML
 	ColorPicker id_colorPicker;
+	
+	Color bgColor = Color.BLACK;
+	double[] bgImageCoords;
 	Color idColor = Color.DODGERBLUE;
+	
 	
 	@FXML
 	TextField tfName;
@@ -111,7 +115,9 @@ public class AppController {
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             id_image.setImage(image);
             double unitSize = image.getHeight() / id_image.getFitHeight();
-            id_image.setViewport(new Rectangle2D((image.getWidth() - (id_image.getFitWidth() * unitSize)) /2.0 , 0 , id_image.getFitWidth() * unitSize, image.getHeight()));
+            double[] newbgImageCoords = {(image.getWidth() - (id_image.getFitWidth() * unitSize)) /2.0 , 0 , id_image.getFitWidth() * unitSize, image.getHeight()};
+            bgImageCoords = newbgImageCoords;
+            id_image.setViewport(new Rectangle2D(this.bgImageCoords[0],this.bgImageCoords[1],this.bgImageCoords[2],this.bgImageCoords[3]));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -229,7 +235,8 @@ public class AppController {
 			}
 		}
 		public void setBgBorderColor() {
-			bg_line.setStroke(bg_colorPicker.getValue());
+			bgColor = bg_colorPicker.getValue();
+			bg_line.setStroke(bgColor);
 			bg_colorPicker.setVisible(false);
 		}
 		public void setIdBorderColor() {
@@ -282,15 +289,30 @@ public class AppController {
 		}
 		
 		public void onExport() {
-			this.bufferImage = new BufferedImage((int)this.cardPane.getPrefWidth(), (int)this.cardPane.getPrefHeight(), BufferedImage.TYPE_INT_RGB);
-			Graphics2D g2 = this.bufferImage.createGraphics();
+			this.bufferImage = new BufferedImage((int)cardPane.getPrefWidth(), (int)cardPane.getPrefHeight(), BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = bufferImage.createGraphics();
 			
+			//draw full white rect
+			g2.setColor(new java.awt.Color(255,255,255));
+			g2.fillRect(0, 0, (int)cardPane.getPrefWidth(), (int)cardPane.getPrefHeight());
+			
+			//draw bgBorder
+			g2.setColor(new java.awt.Color((int)(bgColor.getRed() * 255.0),(int)(bgColor.getGreen()* 255.0),(int)(bgColor.getBlue()* 255.0)));
+			g2.fillRect(0, 0, (int)bg_line.getWidth(), (int)bg_line.getHeight());
+			
+			//draw bg image
+			g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), 0, 0, 1200, 400, null);
 			
 			FileChooser fileChooser = new FileChooser();
 	        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
 	        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
 	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG); 
 	        File file = fileChooser.showSaveDialog(null); 
+	        try {
+	            ImageIO.write(bufferImage, "jpg", file);
+	         } catch (IOException e) {
+	            e.printStackTrace();
+	         }
 			
 			/**
 			JFileChooser filechooser = new JFileChooser();
