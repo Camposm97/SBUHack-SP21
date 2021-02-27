@@ -3,11 +3,16 @@ package controller;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -345,9 +350,10 @@ public class AppController {
 					(int)this.idImageCoords[1], 
 					(int)(id_image.getImage().getWidth() - this.idImageCoords[0]), 
 					(int)(id_image.getImage().getHeight() - this.idImageCoords[1]), 
-					//(int)this.idImageCoords[3], 
 					null);
+			
 			//draw text
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			g2.setColor(new java.awt.Color(0,0,0));
 			g2.setFont(new Font("SansSerif", Font.PLAIN, 24));
 			drawCenteredString(g2, label_0, g2.getFont());
@@ -363,11 +369,38 @@ public class AppController {
 	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG); 
 	        File file = fileChooser.showSaveDialog(null); 
 	        try {
-	            ImageIO.write(bufferImage, "jpg", file);
+	            //ImageIO.write(bufferImage, "jpg", file);
+	        	String extension = getFileExtension(file);
+	        	System.out.println(extension);
+	        	
+	        	// Higher Quality JPEG Saving
+	        	if (extension.contentEquals("JPG")){
+	        		ImageWriter iw = ImageIO.getImageWritersByFormatName("jpg").next();
+		        	iw.setOutput(new FileImageOutputStream(file));
+
+		        	// Set the compression quality to 0.9f.
+		        	ImageWriteParam iwParam = iw.getDefaultWriteParam();
+		        	iwParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		        	iwParam.setCompressionQuality(.999f);
+		        	
+		        	iw.write(null, new IIOImage(bufferImage, null, null), iwParam);
+	        	}
+	        	else {
+	        		ImageWriter iw = ImageIO.getImageWritersByFormatName("png").next();
+	        		iw.setOutput(new FileImageOutputStream(file));
+		        	iw.write(new IIOImage(bufferImage, null, null));
+	        	}
+	        	
 	         } catch (IOException e) {
 	            e.printStackTrace();
 	         }
 		}
+		private String getFileExtension(File file) {
+	        String fileName = file.getName();
+	        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+	        return fileName.substring(fileName.lastIndexOf(".")+1);
+	        else return "";
+	    }
 		public void drawCenteredString(Graphics2D g2, Label label, Font font) {
 		    FontMetrics metrics = g2.getFontMetrics(font);
 		    int x = (int)(label.getLayoutX() + (label.getWidth() - metrics.stringWidth(label.getText())) / 2);
