@@ -10,8 +10,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -89,6 +87,8 @@ public class AppController {
             BufferedImage bufferedImage = ImageIO.read(file);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             bg_image.setImage(image);
+            double unitSize = image.getWidth() / bg_image.getFitWidth();
+            bg_image.setViewport(new Rectangle2D(0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) /2.0  , image.getWidth(), bg_image.getFitHeight() * unitSize));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
