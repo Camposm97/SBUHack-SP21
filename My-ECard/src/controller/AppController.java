@@ -69,12 +69,6 @@ public class AppController {
 		System.out.println(file);
 	}
 	
-	// I will do this :)
-	public void onNameEntered(ActionEvent event) {
-		onSubmitName();
-		onClickAddress();
-		tfAddress.requestFocus();
-	}
 	public void loadBackgroundImage() {
 		FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -202,4 +196,29 @@ public class AppController {
 			tfWebsite.setVisible(false);
 			btn_4.setVisible(false);
 		}
+		@FXML
+		Rectangle bg_border;
+		@FXML
+		Rectangle id_border;
+		
+		public void onBbBorderClick() {
+			
+		}
+		public void onIdBorderClick() {
+			
+		}
+		public void onBgMouseEnter() {
+			bg_border.setStroke(javafx.scene.paint.Color.GOLDENROD);
+			bg_border.setVisible(true);
+		}
+		public void onIdMouseEnter() {
+			id_border.setFill(javafx.scene.paint.Color.GOLDENROD);
+		}
+		public void onBgMouseExit() {
+			bg_border.setVisible(false);
+		}
+		public void onIdMouseExit() {
+			id_border.setFill(javafx.scene.paint.Color.DODGERBLUE);
+		}
+
 }
