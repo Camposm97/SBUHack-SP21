@@ -195,7 +195,8 @@ public class AppController {
 	}
 	
 	public void save(ActionEvent event) {
-		// Needs a path to save to without FileChooser
+		// TODO Needs a path to save to without FileChooser
+		FXUtil.showWIP();
 	}
 	
 	public void exitApp(ActionEvent event) {
