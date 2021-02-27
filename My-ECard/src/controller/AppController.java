@@ -108,63 +108,98 @@ public class AppController {
         }
 	}
 
-	public void onClickName() {
-		tfName.setVisible(true);
-		btn_0.setVisible(true);
-		label_0.setVisible(false);
-		tfName.requestFocus();
-	}
-	public void onSubmitName() {
-		label_0.setVisible(true);
-		label_0.setText(tfName.getText());
-		tfName.setVisible(false);
-		btn_0.setVisible(false);
-	}
-	public void onClickAddress() {
-		tfAddress.setVisible(true);
-		btn_1.setVisible(true);
-		label_1.setVisible(false);
-	}
-	public void onSubmitAddress() {
-		label_1.setVisible(true);
-		label_1.setText(tfAddress.getText());
-		tfAddress.setVisible(false);
-		btn_1.setVisible(false);
-	}
-	public void onClickPhone() {
-		tfPhone.setVisible(true);
-		btn_2.setVisible(true);
-		label_2.setVisible(false);
-	}
-	public void onSubmitPhone() {
-		label_2.setVisible(true);
-		label_2.setText(tfPhone.getText());
-		tfPhone.setVisible(false);
-		btn_2.setVisible(false);
-	}
-	public void onClickEmail() {
-		tfEmail.setVisible(true);
-		btn_3.setVisible(true);
-		label_3.setVisible(false);
-	}
-	public void onSubmitEmail() {
-		label_3.setVisible(true);
-		label_3.setText(tfEmail.getText());
-		tfEmail.setVisible(false);
-		btn_3.setVisible(false);
-	}
-	public void onClickWebsite() {
-		tfWebsite.setVisible(true);
-		btn_4.setVisible(true);
-		label_4.setVisible(false);
-	}
-	public void onSubmitWebsite() {
-		label_4.setVisible(true);
-		label_4.setText(tfWebsite.getText());
-		tfWebsite.setVisible(false);
-		btn_4.setVisible(false);
-	}
-	
+	// I will do this :)
+		public void onNameEntered(ActionEvent event) {
+			onSubmitName();
+			onClickAddress();
+			tfAddress.requestFocus();
+		}
+		
+		public void onAddressEntered(ActionEvent event) {
+			onSubmitAddress();
+			onClickPhone();
+			tfPhone.requestFocus();
+		}
+		
+		public void onPhoneEntered(ActionEvent event) {
+			onSubmitPhone();
+			onClickEmail();
+			tfEmail.requestFocus();
+		}
+		
+		public void onEmailEntered(ActionEvent event) {
+			onSubmitEmail();
+			onClickWebsite();
+			tfWebsite.requestFocus();
+		}
+		
+		public void onWebsiteEntered(ActionEvent event) {
+			onSubmitWebsite();
+		}
 
-	
+		public void onClickName() {
+			tfName.setVisible(true);
+			btn_0.setVisible(true);
+			label_0.setVisible(false);
+			tfName.requestFocus();
+		}
+
+		public void onSubmitName() {
+			label_0.setVisible(true);
+			label_0.setText(tfName.getText());
+			tfName.setVisible(false);
+			btn_0.setVisible(false);
+		}
+
+		public void onClickAddress() {
+			tfAddress.setVisible(true);
+			btn_1.setVisible(true);
+			label_1.setVisible(false);
+		}
+
+		public void onSubmitAddress() {
+			label_1.setVisible(true);
+			label_1.setText(tfAddress.getText());
+			tfAddress.setVisible(false);
+			btn_1.setVisible(false);
+		}
+
+		public void onClickPhone() {
+			tfPhone.setVisible(true);
+			btn_2.setVisible(true);
+			label_2.setVisible(false);
+		}
+
+		public void onSubmitPhone() {
+			label_2.setVisible(true);
+			label_2.setText(tfPhone.getText());
+			tfPhone.setVisible(false);
+			btn_2.setVisible(false);
+		}
+
+		public void onClickEmail() {
+			tfEmail.setVisible(true);
+			btn_3.setVisible(true);
+			label_3.setVisible(false);
+		}
+
+		public void onSubmitEmail() {
+			label_3.setVisible(true);
+			label_3.setText(tfEmail.getText());
+			tfEmail.setVisible(false);
+			btn_3.setVisible(false);
+		}
+
+		public void onClickWebsite() {
+			tfWebsite.setVisible(true);
+			btn_4.setVisible(true);
+			label_4.setVisible(false);
+		}
+
+		public void onSubmitWebsite() {
+			label_4.setVisible(true);
+			label_4.setText(tfWebsite.getText());
+			tfWebsite.setVisible(false);
+			btn_4.setVisible(false);
+		}
 }
