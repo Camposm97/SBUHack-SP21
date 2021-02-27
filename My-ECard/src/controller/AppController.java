@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -89,6 +90,11 @@ public class AppController {
 	@FXML
 	Label label_4;
 	
+	@FXML
+	HBox bgOptionsContainer;
+	@FXML
+	HBox idOptionsContainer;
+	
 	public AppController() {
 		currentCard = new CardData();
 	}
@@ -111,14 +117,8 @@ public class AppController {
 			BufferedImage bufferedImage = ImageIO.read(file);
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 			bg_image.setImage(image);
-			this.setBgFillCoords(image);
-			double[] bgImageCoords = currentCard.getBgImageCoords();
-			bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],
-					bgImageCoords[3]));
-		//	final String FILE_TYPE = "jpg";
-		//	File file = new File(src);
-		//	BufferedImage bi = ImageIO.read(file);
-	
+			setBgCrop(image);
+			updateBgCrop();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, this.getFileExtension(file), baos);
 			byte[] byteArr = baos.toByteArray();
@@ -138,10 +138,8 @@ public class AppController {
 			BufferedImage bufferedImage = ImageIO.read(file);
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 			id_image.setImage(image);
-			this.setIdFillCoords(image);
-			double[] idImageCoords = currentCard.getIdImageCoords();
-			id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],
-					idImageCoords[3]));
+			this.setIdCrop(image);
+			this.updateIdCrop();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, this.getFileExtension(file), baos);
 			byte[] byteArr = baos.toByteArray();
@@ -159,14 +157,14 @@ public class AppController {
 		label_4.setText(currentCard.getWebsite());
 	}
 
-	public void setIdFillCoords(Image image) {
+	public void setIdCrop(Image image) {
 		double unitSize = image.getHeight() / id_image.getFitHeight();
 		double[] newIdImageCoords = { (image.getWidth() - (id_image.getFitWidth() * unitSize)) / 2.0, 0,
 				id_image.getFitWidth() * unitSize, image.getHeight() };
 		currentCard.setIdImageCoords(newIdImageCoords);
 	}
 
-	public void setBgFillCoords(Image image) {
+	public void setBgCrop(Image image) {
 		double unitSize = image.getWidth() / bg_image.getFitWidth();
 		double[] newBgImageCoords = { 0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) / 2.0,
 				image.getWidth(), bg_image.getFitHeight() * unitSize };
@@ -185,16 +183,13 @@ public class AppController {
 				InputStream is1 = new ByteArrayInputStream(idImageBytes);
 				Image idImage = new Image(is1);
 				id_image.setImage(idImage);
-				this.setIdFillCoords(idImage);
-				double[] idImageCoords = currentCard.getIdImageCoords();
-				id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],
-						idImageCoords[3]));
-
+				this.setIdCrop(idImage);
+				this.updateIdCrop();
 				byte[] backgroundImageBytes = currentCard.getBackgroundImage().getBytes();
 				InputStream is2 = new ByteArrayInputStream(backgroundImageBytes);
 				Image backgroundImage = new Image(is2);
 				bg_image.setImage(backgroundImage);
-				this.setBgFillCoords(backgroundImage);
+				this.setBgCrop(backgroundImage);
 				double[] bgImageCoords = currentCard.getBgImageCoords();
 				bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],
 						bgImageCoords[3]));
@@ -432,7 +427,7 @@ public class AppController {
 	
 		double[] bgImageCoords = currentCard.getBgImageCoords();
 		if (bgImageCoords == null) {
-			this.setBgFillCoords(this.bg_image.getImage());
+			this.setBgCrop(this.bg_image.getImage());
 			bgImageCoords = currentCard.getBgImageCoords();
 		}
 		g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), (int) bg_image.getLayoutX(),
@@ -451,7 +446,7 @@ public class AppController {
 		// draw id image
 		double[] idImageCoords = currentCard.getIdImageCoords();
 		if (idImageCoords == null) {
-			this.setIdFillCoords(this.id_image.getImage());
+			this.setIdCrop(this.id_image.getImage());
 			idImageCoords = currentCard.getIdImageCoords();
 		}
 		g2.drawImage(SwingFXUtils.fromFXImage(this.id_image.getImage(), null), (int) id_image.getLayoutX(),
@@ -521,5 +516,29 @@ public class AppController {
 		int x = (int) (label.getLayoutX() + (label.getWidth() - metrics.stringWidth(label.getText())) / 2);
 		int y = (int) (label.getLayoutY() + (label.getHeight() - metrics.getHeight() / 2) + metrics.getAscent());
 		g2.drawString(label.getText(), x, y);
+	}
+	public void onBgOptionsClick() {
+		if (this.bgOptionsContainer.isVisible()) {
+			this.bgOptionsContainer.setVisible(false);
+		}
+		else {
+			this.bgOptionsContainer.setVisible(true);
+		}
+	}
+	public void onIdOptionsClick() {
+		if (this.idOptionsContainer.isVisible()) {
+			this.idOptionsContainer.setVisible(false);
+		}
+		else {
+			this.idOptionsContainer.setVisible(true);
+		}
+	}
+	public void updateBgCrop() {
+		double[] bgImageCoords = currentCard.getBgImageCoords();
+		bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],bgImageCoords[3]));
+	}
+	public void updateIdCrop() {
+		double[] idImageCoords = currentCard.getIdImageCoords();
+		id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],idImageCoords[3]));
 	}
 }

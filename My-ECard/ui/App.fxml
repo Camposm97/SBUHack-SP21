@@ -72,10 +72,10 @@
 		</MenuBar>
 	</top>
 	<center>
-		<Pane fx:id="cardPane" prefHeight="800.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+		<Pane fx:id="cardPane" prefHeight="800.0" prefWidth="1200.0">
 			<children>
 				<Rectangle fx:id="bg_line" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="405.0" onMouseClicked="#onBgBorderClick" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="1200.0" />
-				<ImageView fx:id="bg_image" fitHeight="400.0" fitWidth="1200.0" onMouseClicked="#loadBackgroundImage" onMouseEntered="#onBgMouseEnter" onMouseExited="#onBgMouseExit" pickOnBounds="true">
+				<ImageView fx:id="bg_image" fitHeight="400.0" fitWidth="1200.0" nodeOrientation="INHERIT" onMouseClicked="#loadBackgroundImage" onMouseEntered="#onBgMouseEnter" onMouseExited="#onBgMouseExit" pickOnBounds="true">
 					<image>
 						<Image url="@../resources/agate.jpg" />
 					</image>
@@ -122,28 +122,28 @@
 						<Font size="20.0" />
 					</font>
 				</Label>
-            <Button fx:id="idOptions" layoutX="314.0" layoutY="564.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="..." />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="133.0" layoutY="561.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="180.0" visible="false">
+            <Button fx:id="idOptions" layoutX="314.0" layoutY="564.0" mnemonicParsing="false" onAction="#onIdOptionsClick" prefHeight="30.0" prefWidth="30.0" text="..." />
+            <HBox fx:id="idOptionsContainer" alignment="CENTER_LEFT" fillHeight="false" layoutX="133.0" layoutY="561.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="180.0" visible="false">
                <children>
-      				<Button fx:id="idZoomIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="+" HBox.hgrow="NEVER" />
-                  <Button fx:id="idZoomOut" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="-" />
-                  <Button fx:id="idRight" layoutX="40.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="&gt;" />
-                  <Button fx:id="idLeft" layoutX="70.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="&lt;" />
-                  <Button fx:id="idDown" alignment="CENTER" layoutX="100.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="v" textAlignment="CENTER" />
-                  <Button fx:id="idUp" layoutX="130.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="^" />
+      				<Button fx:id="idZoomIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" HBox.hgrow="NEVER" />
+                  <Button fx:id="idZoomOut" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="-" />
+                  <Button fx:id="idRight" layoutX="40.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="&gt;" />
+                  <Button fx:id="idLeft" layoutX="70.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="&lt;" />
+                  <Button fx:id="idDown" alignment="CENTER" layoutX="100.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="v" textAlignment="CENTER" />
+                  <Button fx:id="idUp" layoutX="130.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="^" />
                </children>
             </HBox>
 				<ColorPicker fx:id="id_colorPicker" layoutX="133.0" layoutY="615.0" onAction="#setIdBorderColor" visible="false" />
 				<ColorPicker fx:id="bg_colorPicker" layoutX="537.0" layoutY="410.0" onAction="#setBgBorderColor" visible="false" />
-            <Button fx:id="bgOptions" layoutX="1156.0" layoutY="363.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="..." />
-            <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="976.0" layoutY="360.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="180.0" visible="false">
+            <Button fx:id="bgOptions" layoutX="1156.0" layoutY="363.0" mnemonicParsing="false" onAction="#onBgOptionsClick" prefHeight="30.0" prefWidth="30.0" text="..." />
+            <HBox fx:id="bgOptionsContainer" alignment="CENTER_LEFT" fillHeight="false" layoutX="976.0" layoutY="360.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="180.0" visible="false">
                <children>
-                  <Button fx:id="bgZoomIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="+" HBox.hgrow="NEVER" />
-                  <Button fx:id="bgZoomOut" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="-" />
-                  <Button fx:id="bgRight" layoutX="40.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="&gt;" />
-                  <Button fx:id="bgLeft" layoutX="70.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="&lt;" />
-                  <Button fx:id="bgDown" alignment="CENTER" layoutX="100.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="v" textAlignment="CENTER" />
-                  <Button fx:id="bgUp" layoutX="130.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="^" />
+                  <Button fx:id="bgZoomIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" HBox.hgrow="NEVER" />
+                  <Button fx:id="bgZoomOut" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="-" />
+                  <Button fx:id="bgRight" layoutX="40.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="&gt;" />
+                  <Button fx:id="bgLeft" layoutX="70.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="&lt;" />
+                  <Button fx:id="bgDown" alignment="CENTER" layoutX="100.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="v" textAlignment="CENTER" />
+                  <Button fx:id="bgUp" layoutX="130.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="^" />
                </children>
             </HBox>
 			</children>
