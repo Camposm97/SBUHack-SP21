@@ -2,11 +2,9 @@ package controller;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,6 +14,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +29,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import util.DataUtil;
+import util.FXUtil;
 import javafx.stage.Stage;
 
 public class AppController {
@@ -145,6 +147,38 @@ public class AppController {
 		double[] newBgImageCoords = { 0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) / 2.0,
 				image.getWidth(), bg_image.getFitHeight() * unitSize };
 		bgImageCoords = newBgImageCoords;
+	}
+	
+	public void openFile(ActionEvent event) {
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
+		FXUtil.showWIP(); // TODO
+		File file = fc.showOpenDialog(new Stage());
+		if (file != null) {
+			
+		}
+	}
+	
+	public void closeFile(ActionEvent event) {
+		FXUtil.showWIP(); // TODO
+	}
+	
+	public void saveAs(ActionEvent event) {
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
+		FXUtil.showWIP(); // TODO
+		File file = fc.showOpenDialog(new Stage());
+		if (file != null) {
+			
+		}
+	}
+	
+	public void save(ActionEvent event) {
+		// Needs a path to save to without FileChooser
+	}
+	
+	public void exitApp(ActionEvent event) {
+		Platform.exit();
 	}
 
 	// I will do this :)
