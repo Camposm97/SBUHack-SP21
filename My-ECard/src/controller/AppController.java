@@ -1,16 +1,34 @@
 package controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class AppController {
+	
+	@FXML
+	ImageView bg_image;
+	@FXML
+	ImageView id_image;
+	@FXML
+	Button bg_btn;
+	@FXML
+	Button id_btn;
+	
 	@FXML
 	TextField tfName;
 	@FXML
@@ -56,7 +74,45 @@ public class AppController {
 		onClickAddress();
 		tfAddress.requestFocus();
 	}
-	
+	public void loadBackgroundImage() {
+		FileChooser fileChooser = new FileChooser();
+        
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+         
+        File file = fileChooser.showOpenDialog(null);
+                  
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file);
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            bg_image.setImage(image);
+            double unitSize = image.getWidth() / bg_image.getFitWidth();
+            bg_image.setViewport(new Rectangle2D(0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) /2.0  , image.getWidth(), bg_image.getFitHeight() * unitSize));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+	}
+	public void loadIdImage() {
+		FileChooser fileChooser = new FileChooser();
+        
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+         
+        File file = fileChooser.showOpenDialog(null);
+                  
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file);
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            id_image.setImage(image);
+            double unitSize = image.getHeight() / id_image.getFitHeight();
+            id_image.setViewport(new Rectangle2D((image.getWidth() - (id_image.getFitWidth() * unitSize)) /2.0 , 0 , id_image.getFitWidth() * unitSize, image.getHeight()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+	}
+
 	public void onClickName() {
 		tfName.setVisible(true);
 		btn_0.setVisible(true);
