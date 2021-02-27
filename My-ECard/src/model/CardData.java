@@ -1,6 +1,8 @@
 package model;
 
-public class CardData {
+import java.io.Serializable;
+
+public class CardData implements Serializable {
 	
 	private String name;
 	private String message;
