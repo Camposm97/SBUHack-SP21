@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -314,6 +316,15 @@ public class AppController {
 					(int)id_image.getFitWidth(), 
 					(int)id_image.getFitHeight(), 
 					null);
+			//draw text
+			g2.setColor(new java.awt.Color(0,0,0));
+			g2.setFont(new Font("SansSerif", Font.PLAIN, 24));
+			drawCenteredString(g2, label_0, g2.getFont());
+			g2.setFont(new Font("SansSerif", Font.PLAIN, 20));
+			drawCenteredString(g2, label_1, g2.getFont());
+			drawCenteredString(g2, label_2, g2.getFont());
+			drawCenteredString(g2, label_3, g2.getFont());
+			drawCenteredString(g2, label_4, g2.getFont());
 			
 			FileChooser fileChooser = new FileChooser();
 	        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -321,25 +332,15 @@ public class AppController {
 	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG); 
 	        File file = fileChooser.showSaveDialog(null); 
 	        try {
-	            ImageIO.write(bufferImage, "png", file);
+	            ImageIO.write(bufferImage, "jpg", file);
 	         } catch (IOException e) {
 	            e.printStackTrace();
 	         }
-			
-			/**
-			JFileChooser filechooser = new JFileChooser();
-		      FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		               "JPG Images", "jpg");
-		      filechooser.setFileFilter(filter);
-		      int result = filechooser.showSaveDialog(this);
-		      if (result == JFileChooser.APPROVE_OPTION) {
-		         File saveFile = filechooser.getSelectedFile();
-		         try {
-		            ImageIO.write(bImage, "jpg", saveFile);
-		         } catch (IOException e) {
-		            e.printStackTrace();
-		         }
-		      }
-		      */
+		}
+		public void drawCenteredString(Graphics2D g2, Label label, Font font) {
+		    FontMetrics metrics = g2.getFontMetrics(font);
+		    int x = (int)(label.getLayoutX() + (label.getWidth() - metrics.stringWidth(label.getText())) / 2);
+		    int y = (int)(label.getLayoutY() + (label.getHeight() - metrics.getHeight() / 2) + metrics.getAscent());
+		    g2.drawString(label.getText(), x, y);
 		}
 }
