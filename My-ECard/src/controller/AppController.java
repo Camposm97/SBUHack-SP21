@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -103,10 +106,13 @@ public class AppController {
             BufferedImage bufferedImage = ImageIO.read(file);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             id_image.setImage(image);
+            double unitSize = image.getHeight() / id_image.getFitHeight();
+            id_image.setViewport(new Rectangle2D((image.getWidth() - (id_image.getFitWidth() * unitSize)) /2.0 , 0 , id_image.getFitWidth() * unitSize, image.getHeight()));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 	}
+
 	public void onClickName() {
 		tfName.setVisible(true);
 		btn_0.setVisible(true);
