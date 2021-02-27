@@ -5,9 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -178,14 +176,28 @@ public class AppController {
 	public void openFile(ActionEvent event) {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
-		FXUtil.showWIP(); // TODO
 		File file = fc.showOpenDialog(new Stage());
 		if (file != null) {
 			currentCard = DataUtil.load(file.getPath());
 			if (currentCard != null) {
 				loadFields();
-				loadBackgroundImage();
-				loadIdImage();
+				byte[] idImageBytes = currentCard.getIdImage().getBytes();
+				InputStream is1 = new ByteArrayInputStream(idImageBytes);
+				Image idImage = new Image(is1);
+				id_image.setImage(idImage);
+				this.setIdFillCoords(idImage);
+				double[] idImageCoords = currentCard.getIdImageCoords();
+				id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],
+						idImageCoords[3]));
+
+				byte[] backgroundImageBytes = currentCard.getBackgroundImage().getBytes();
+				InputStream is2 = new ByteArrayInputStream(backgroundImageBytes);
+				Image backgroundImage = new Image(is2);
+				bg_image.setImage(backgroundImage);
+				this.setBgFillCoords(backgroundImage);
+				double[] bgImageCoords = currentCard.getBgImageCoords();
+				bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],
+						bgImageCoords[3]));
 			}
 		}
 	}

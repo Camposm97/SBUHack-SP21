@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class ImageData {
+public class ImageData implements Serializable {
 	private ImageType imageType;
 	private byte[] bytes;
 	

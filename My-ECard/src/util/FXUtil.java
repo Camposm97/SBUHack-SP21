@@ -22,7 +22,7 @@ public class FXUtil {
 	}
 	
 	public static ExtensionFilter getDefaultExtFilter() {
-		return new ExtensionFilter("Data", ".dat");
+		return new ExtensionFilter("Data", "*.dat");
 	}
 	
 	public static void showWIP() {
