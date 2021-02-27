@@ -190,7 +190,7 @@ public class AppController {
 		FXUtil.showWIP(); // TODO
 		File file = fc.showOpenDialog(new Stage());
 		if (file != null) {
-			
+			DataUtil.save(currentCard, file.getPath());
 		}
 	}
 	
