@@ -4,7 +4,10 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
 <BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <top>
@@ -35,4 +38,20 @@
         </menus>
       </MenuBar>
    </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="1200.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../resources/agate.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="406.0" fitWidth="309.0" layoutX="34.0" layoutY="184.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@../resources/prof.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </center>
 </BorderPane>
