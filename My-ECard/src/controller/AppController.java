@@ -191,8 +191,7 @@ public class AppController {
 				bg_image.setImage(backgroundImage);
 				this.setBgCrop(backgroundImage);
 				double[] bgImageCoords = currentCard.getBgImageCoords();
-				bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],
-						bgImageCoords[3]));
+				bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],bgImageCoords[3]));
 			}
 		}
 	}
@@ -419,29 +418,28 @@ public class AppController {
 
 		// draw bgBorder
 		double[] bgColor= currentCard.getBgColor();
-		g2.setColor(new java.awt.Color((int) (bgColor[0] * 255.0), (int) (bgColor[1] * 255.0),
-				(int) (bgColor[2] * 255.0)));
+		g2.setColor(new java.awt.Color((int) (bgColor[0] * 255.0), (int) (bgColor[1] * 255.0),(int) (bgColor[2] * 255.0)));
 		g2.fillRect(0, 0, (int) bg_line.getWidth(), (int) bg_line.getHeight());
 
 		// draw bg image
 	
-		double[] bgImageCoords = currentCard.getBgImageCoords();
-		if (bgImageCoords == null) {
-			this.setBgCrop(this.bg_image.getImage());
-			bgImageCoords = currentCard.getBgImageCoords();
-		}
-		g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), (int) bg_image.getLayoutX(),
-				(int) bg_image.getLayoutY(), (int) bg_image.getFitWidth(), (int) bg_image.getFitHeight(),
-				(int) bgImageCoords[0], (int) bgImageCoords[1],
-				(int) (bg_image.getImage().getWidth() - bgImageCoords[0]),
-				(int) (bg_image.getImage().getHeight() - bgImageCoords[1]), null);
+		double[] bgImageCoords = this.getBgCropCoords();
+	//	double unitSize = image.getWidth() / bg_image.getFitWidth();
+		g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), 
+				(int) bg_image.getLayoutX(),
+				(int) bg_image.getLayoutY(), 
+				(int) bg_image.getFitWidth(), 
+				(int) bg_image.getFitHeight(),
+				(int) bgImageCoords[0], 
+				(int) bgImageCoords[1],
+				(int) (bgImageCoords[0] + bgImageCoords[2]),
+				(int) (bgImageCoords[1] + bgImageCoords[3]), 
+				null);
 
 		// draw profileBorder
 		double[] idColor= currentCard.getIdColor();
-		g2.setColor(new java.awt.Color((int) (idColor[0] * 255.0), (int) (idColor[1]* 255.0),
-				(int) (idColor[2] * 255.0)));
-		g2.fillRect((int) this.id_border.getLayoutX(), (int) this.id_border.getLayoutY(),
-				(int) this.id_border.getWidth(), (int) this.id_border.getHeight());
+		g2.setColor(new java.awt.Color((int) (idColor[0] * 255.0), (int) (idColor[1]* 255.0),(int) (idColor[2] * 255.0)));
+		g2.fillRect((int) this.id_border.getLayoutX(), (int) this.id_border.getLayoutY(),(int) this.id_border.getWidth(), (int) this.id_border.getHeight());
 
 		// draw id image
 		double[] idImageCoords = currentCard.getIdImageCoords();
@@ -449,11 +447,16 @@ public class AppController {
 			this.setIdCrop(this.id_image.getImage());
 			idImageCoords = currentCard.getIdImageCoords();
 		}
-		g2.drawImage(SwingFXUtils.fromFXImage(this.id_image.getImage(), null), (int) id_image.getLayoutX(),
-				(int) id_image.getLayoutY(), (int) (id_image.getLayoutX() + id_image.getFitWidth()),
-				(int) (id_image.getLayoutY() + id_image.getFitHeight()), (int) idImageCoords[0],
-				(int) idImageCoords[1], (int) (id_image.getImage().getWidth() - idImageCoords[0]),
-				(int) (id_image.getImage().getHeight() - idImageCoords[1]), null);
+		g2.drawImage(SwingFXUtils.fromFXImage(this.id_image.getImage(), null), 
+				(int) id_image.getLayoutX(),
+				(int) id_image.getLayoutY(), 
+				(int) (id_image.getLayoutX() + id_image.getFitWidth()),
+				(int) (id_image.getLayoutY() + id_image.getFitHeight()), 
+				(int) idImageCoords[0],
+				(int) idImageCoords[1], 
+				(int) (idImageCoords[2] + idImageCoords[0]),
+				(int) (idImageCoords[3] + idImageCoords[1]), 
+				null);
 
 		// draw text
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -533,6 +536,112 @@ public class AppController {
 			this.idOptionsContainer.setVisible(true);
 		}
 	}
+	public void zoomInBg() {
+		double[] bgImageCoords = this.getBgCropCoords();
+		Image image = bg_image.getImage();
+		double ratio = image.getWidth() / image.getHeight();
+	
+		if (bgImageCoords[2] > 100.0 && bgImageCoords[3] > 100.0) {
+			bgImageCoords[2] -= 5.0 * ratio;
+			bgImageCoords[3] -= 5.0;
+		}
+		updateBgCrop();
+	}
+	public void zoomOutBg() {
+		double[] bgImageCoords = this.getBgCropCoords();
+		Image image = bg_image.getImage();
+		double ratio = image.getWidth() / image.getHeight();
+		if (bgImageCoords[2] < image.getWidth() - 5.0 && bgImageCoords[3] < image.getHeight() - 5.0) {
+			bgImageCoords[2] += 5.0 * ratio;
+			bgImageCoords[3] += 5.0;
+		}
+		updateBgCrop();
+	}
+	public void shiftUpBg() {
+		double[] bgImageCoords = this.getBgCropCoords();
+		Image image = bg_image.getImage(); 
+		if (bgImageCoords[1] < image.getHeight() - 5.0) {
+			bgImageCoords[1] += 5.0;
+		}
+		this.updateBgCrop();
+	}
+	public void shiftDownBg() {
+		double[] bgImageCoords = this.getBgCropCoords();
+		
+		if (bgImageCoords[1] > 5.0) {
+			bgImageCoords[1] -= 5.0;
+		}
+		this.updateBgCrop();
+	}
+	public void shiftRightBg() {
+	
+		double[] bgImageCoords = this.getBgCropCoords();
+		if (bgImageCoords[0] > 5.0) {
+			bgImageCoords[0] -= 5.0;
+		}
+		this.updateBgCrop();
+	}
+	public void shiftLeftBg() {
+		double[] bgImageCoords = this.getBgCropCoords();
+		Image image = bg_image.getImage(); 
+		if (bgImageCoords[0] < image.getWidth() - 5.0) {
+			bgImageCoords[0] += 5.0;
+		}
+		this.updateBgCrop();
+	}
+	public void zoomInId() {
+		double[] idImageCoords = this.getIdCropCoords();
+		Image image = id_image.getImage();
+		double ratio = image.getWidth() / image.getHeight();
+	
+		if (idImageCoords[2] > 100.0 && idImageCoords[3] > 100.0) {
+			idImageCoords[2] -= 5.0 * ratio;
+			idImageCoords[3] -= 5.0;
+		}
+		updateIdCrop();
+	}
+	public void zoomOutId() {
+		double[] idImageCoords = this.getIdCropCoords();
+		Image image = id_image.getImage();
+		double ratio = image.getWidth() / image.getHeight();
+		if (idImageCoords[2] < image.getWidth() - 5.0 && idImageCoords[3] < image.getHeight() - 5.0) {
+			idImageCoords[2] += 5.0 * ratio;
+			idImageCoords[3] += 5.0;
+		}
+		updateIdCrop();
+	}
+	public void shiftUpId() {
+		double[] idImageCoords = this.getIdCropCoords();
+		Image image = id_image.getImage(); 
+		if (idImageCoords[1] < image.getHeight() - 5.0) {
+			idImageCoords[1] += 5.0;
+		}
+		this.updateIdCrop();
+	}
+	public void shiftDownId() {
+		double[] idImageCoords = this.getIdCropCoords();
+		
+		if (idImageCoords[1] > 5.0) {
+			idImageCoords[1] -= 5.0;
+		}
+		this.updateIdCrop();
+	}
+	public void shiftRightId() {
+	
+		double[] idImageCoords = this.getIdCropCoords();
+		if (idImageCoords[0] > 5.0) {
+			idImageCoords[0] -= 5.0;
+		}
+		this.updateIdCrop();
+	}
+	public void shiftLeftId() {
+		double[] idImageCoords = this.getIdCropCoords();
+		Image image = id_image.getImage(); 
+		if (idImageCoords[0] < image.getWidth() - 5.0) {
+			idImageCoords[0] += 5.0;
+		}
+		this.updateIdCrop();
+	}
 	public void updateBgCrop() {
 		double[] bgImageCoords = currentCard.getBgImageCoords();
 		bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],bgImageCoords[3]));
@@ -540,5 +649,21 @@ public class AppController {
 	public void updateIdCrop() {
 		double[] idImageCoords = currentCard.getIdImageCoords();
 		id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],idImageCoords[3]));
+	}
+	public double[] getBgCropCoords() {
+		double[] bgImageCoords = currentCard.getBgImageCoords();
+		if (bgImageCoords == null) {
+			Image image = bg_image.getImage();
+			setBgCrop(image);
+		}
+		return currentCard.getBgImageCoords();
+	}
+	public double[] getIdCropCoords() {
+		double[] idImageCoords = currentCard.getIdImageCoords();
+		if (idImageCoords == null) {
+			Image image = id_image.getImage();
+			setIdCrop(image);
+		}
+		return currentCard.getIdImageCoords();
 	}
 }
