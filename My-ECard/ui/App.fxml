@@ -92,6 +92,7 @@
 				<TextField fx:id="tfPhone" alignment="CENTER" layoutX="422.0" layoutY="554.0" onAction="#onPhoneEntered" prefHeight="50.0" prefWidth="700.0" promptText="PHONE" style="-fx-font-size: 20;" visible="false" />
 				<TextField fx:id="tfEmail" alignment="CENTER" layoutX="422.0" layoutY="614.0" onAction="#onEmailEntered" prefHeight="50.0" prefWidth="700.0" promptText="EMAIL" style="-fx-font-size: 20;" visible="false" />
 				<TextField fx:id="tfWebsite" alignment="CENTER" layoutX="422.0" layoutY="674.0" onAction="#onWebsiteEntered" prefHeight="50.0" prefWidth="700.0" promptText="WEBSITE" style="-fx-font-size: 20;" visible="false" />
+            <Button fx:id="btn_0" layoutX="1122.0" layoutY="434.0" mnemonicParsing="false" onAction="#onSubmitName" onMouseClicked="#onSubmitAddress" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
 				<Button fx:id="btn_1" layoutX="1122.0" layoutY="494.0" mnemonicParsing="false" onMouseClicked="#onSubmitAddress" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
 				<Button fx:id="btn_2" layoutX="1122.0" layoutY="554.0" mnemonicParsing="false" onMouseClicked="#onSubmitPhone" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
 				<Button fx:id="btn_3" layoutX="1122.0" layoutY="614.0" mnemonicParsing="false" onMouseClicked="#onSubmitEmail" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
