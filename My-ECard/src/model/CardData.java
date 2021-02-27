@@ -2,10 +2,17 @@ package model;
 
 import java.io.Serializable;
 
+import javafx.scene.paint.Color;
+
 public class CardData implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 9107403793011513398L;
+	
 	private ImageData idImage;
+	double[] bgColor;
+	double[] bgImageCoords;
 	private ImageData backgroundImage;
+	double[] idColor;
+	double[] idImageCoords;
 	private String name;
 	private String message;
 	private String email;
@@ -14,7 +21,19 @@ public class CardData implements Serializable {
 	private String website;
 	
 	public CardData() {
-		
+		this.idImage = null;
+		this.backgroundImage = null;
+		Color blue = Color.DODGERBLUE;
+		double[] color = {blue.getRed(), blue.getGreen(), blue.getBlue(), blue.getOpacity()};
+		this.idColor = color;
+		double[] color2 = {0,0,0,1};
+		this.bgColor = color2;
+		this.name = "";
+		this.message = "";
+		this.email = "";
+		this.address = "";
+		this.phone = "";
+		this.website = "";
 	}
 	
 	public CardData(ImageData idImage, ImageData backgroundImage, String name, String message, String email,
@@ -92,6 +111,38 @@ public class CardData implements Serializable {
 
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	public double[] getBgColor() {
+		return bgColor;
+	}
+
+	public void setBgColor(double[] bgColor) {
+		this.bgColor = bgColor;
+	}
+
+	public double[] getBgImageCoords() {
+		return bgImageCoords;
+	}
+
+	public void setBgImageCoords(double[] bgImageCoords) {
+		this.bgImageCoords = bgImageCoords;
+	}
+
+	public double[] getIdColor() {
+		return idColor;
+	}
+
+	public void setIdColor(double[] idColor) {
+		this.idColor = idColor;
+	}
+
+	public double[] getIdImageCoords() {
+		return idImageCoords;
+	}
+
+	public void setIdImageCoords(double[] idImageCoords) {
+		this.idImageCoords = idImageCoords;
 	}
 
 	@Override

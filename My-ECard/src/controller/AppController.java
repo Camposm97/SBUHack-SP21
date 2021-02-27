@@ -33,9 +33,11 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import util.DataUtil;
 import util.FXUtil;
 import javafx.stage.Stage;
+import model.CardData;
 
 public class AppController {
 
+	CardData currentCard = new CardData();
 	@FXML
 	Pane cardPane;
 	@FXML
@@ -52,11 +54,6 @@ public class AppController {
 	ColorPicker bg_colorPicker;
 	@FXML
 	ColorPicker id_colorPicker;
-
-	Color bgColor = Color.BLACK;
-	double[] bgImageCoords = null;
-	Color idColor = Color.DODGERBLUE;
-	double[] idImageCoords = null;
 
 	@FXML
 	TextField tfName;
@@ -110,8 +107,9 @@ public class AppController {
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 			bg_image.setImage(image);
 			this.setBgFillCoords(image);
-			bg_image.setViewport(new Rectangle2D(this.bgImageCoords[0], this.bgImageCoords[1], this.bgImageCoords[2],
-					this.bgImageCoords[3]));
+			double[] bgImageCoords = currentCard.getBgImageCoords();
+			bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],
+					bgImageCoords[3]));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -128,8 +126,9 @@ public class AppController {
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 			id_image.setImage(image);
 			this.setIdFillCoords(image);
-			id_image.setViewport(new Rectangle2D(this.idImageCoords[0], this.idImageCoords[1], this.idImageCoords[2],
-					this.idImageCoords[3]));
+			double[] idImageCoords = currentCard.getIdImageCoords();
+			id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],
+					idImageCoords[3]));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -139,14 +138,14 @@ public class AppController {
 		double unitSize = image.getHeight() / id_image.getFitHeight();
 		double[] newIdImageCoords = { (image.getWidth() - (id_image.getFitWidth() * unitSize)) / 2.0, 0,
 				id_image.getFitWidth() * unitSize, image.getHeight() };
-		idImageCoords = newIdImageCoords;
+		currentCard.setIdImageCoords(newIdImageCoords);
 	}
 
 	public void setBgFillCoords(Image image) {
 		double unitSize = image.getWidth() / bg_image.getFitWidth();
 		double[] newBgImageCoords = { 0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) / 2.0,
 				image.getWidth(), bg_image.getFitHeight() * unitSize };
-		bgImageCoords = newBgImageCoords;
+		currentCard.setBgImageCoords(newBgImageCoords);
 	}
 	
 	public void openFile(ActionEvent event) {
@@ -220,6 +219,7 @@ public class AppController {
 	public void onSubmitName() {
 		label_0.setVisible(true);
 		label_0.setText(tfName.getText());
+		currentCard.setName(tfName.getText());
 		tfName.setVisible(false);
 		btn_0.setVisible(false);
 	}
@@ -233,6 +233,7 @@ public class AppController {
 	public void onSubmitAddress() {
 		label_1.setVisible(true);
 		label_1.setText(tfAddress.getText());
+		currentCard.setAddress(tfAddress.getText());
 		tfAddress.setVisible(false);
 		btn_1.setVisible(false);
 	}
@@ -246,6 +247,7 @@ public class AppController {
 	public void onSubmitPhone() {
 		label_2.setVisible(true);
 		label_2.setText(tfPhone.getText());
+		currentCard.setPhone(tfPhone.getText());
 		tfPhone.setVisible(false);
 		btn_2.setVisible(false);
 	}
@@ -259,6 +261,7 @@ public class AppController {
 	public void onSubmitEmail() {
 		label_3.setVisible(true);
 		label_3.setText(tfEmail.getText());
+		currentCard.setEmail(tfEmail.getText());
 		tfEmail.setVisible(false);
 		btn_3.setVisible(false);
 	}
@@ -272,6 +275,7 @@ public class AppController {
 	public void onSubmitWebsite() {
 		label_4.setVisible(true);
 		label_4.setText(tfWebsite.getText());
+		currentCard.setWebsite(tfWebsite.getText());
 		tfWebsite.setVisible(false);
 		btn_4.setVisible(false);
 	}
@@ -293,14 +297,18 @@ public class AppController {
 	}
 
 	public void setBgBorderColor() {
-		bgColor = bg_colorPicker.getValue();
+		Color bgColor = bg_colorPicker.getValue();
 		bg_line.setStroke(bgColor);
+		double[] color = {bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue(), bgColor.getOpacity()};
+		currentCard.setBgColor(color);
 		bg_colorPicker.setVisible(false);
 	}
 
 	public void setIdBorderColor() {
-		idColor = id_colorPicker.getValue();
+		Color idColor = id_colorPicker.getValue();
 		id_border.setFill(idColor);
+		double[] color = {idColor.getRed(), idColor.getGreen(), idColor.getBlue(), idColor.getOpacity()};
+		currentCard.setIdColor(color);
 		id_colorPicker.setVisible(false);
 	}
 
@@ -318,7 +326,7 @@ public class AppController {
 	}
 
 	public void onIdMouseExit() {
-		id_border.setFill(idColor);
+		id_border.setFill(new Color(currentCard.getIdColor()[0],currentCard.getIdColor()[1],currentCard.getIdColor()[2],currentCard.getIdColor()[3]));
 	}
 
 	public void onNameMouseEnter() {
@@ -371,37 +379,42 @@ public class AppController {
 		g2.fillRect(0, 0, (int) cardPane.getPrefWidth(), (int) cardPane.getPrefHeight());
 
 		// draw bgBorder
-		g2.setColor(new java.awt.Color((int) (bgColor.getRed() * 255.0), (int) (bgColor.getGreen() * 255.0),
-				(int) (bgColor.getBlue() * 255.0)));
+		double[] bgColor= currentCard.getBgColor();
+		g2.setColor(new java.awt.Color((int) (bgColor[0] * 255.0), (int) (bgColor[1] * 255.0),
+				(int) (bgColor[2] * 255.0)));
 		g2.fillRect(0, 0, (int) bg_line.getWidth(), (int) bg_line.getHeight());
 
 		// draw bg image
-		if (this.bgImageCoords == null) {
-			Image image = bg_image.getImage();
-			this.setBgFillCoords(image);
+	
+		double[] bgImageCoords = currentCard.getBgImageCoords();
+		if (bgImageCoords == null) {
+			this.setBgFillCoords(this.bg_image.getImage());
+			bgImageCoords = currentCard.getBgImageCoords();
 		}
 		g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), (int) bg_image.getLayoutX(),
 				(int) bg_image.getLayoutY(), (int) bg_image.getFitWidth(), (int) bg_image.getFitHeight(),
-				(int) this.bgImageCoords[0], (int) this.bgImageCoords[1],
-				(int) (bg_image.getImage().getWidth() - this.bgImageCoords[0]),
-				(int) (bg_image.getImage().getHeight() - this.bgImageCoords[1]), null);
+				(int) bgImageCoords[0], (int) bgImageCoords[1],
+				(int) (bg_image.getImage().getWidth() - bgImageCoords[0]),
+				(int) (bg_image.getImage().getHeight() - bgImageCoords[1]), null);
 
 		// draw profileBorder
-		g2.setColor(new java.awt.Color((int) (idColor.getRed() * 255.0), (int) (idColor.getGreen() * 255.0),
-				(int) (idColor.getBlue() * 255.0)));
+		double[] idColor= currentCard.getIdColor();
+		g2.setColor(new java.awt.Color((int) (idColor[0] * 255.0), (int) (idColor[1]* 255.0),
+				(int) (idColor[2] * 255.0)));
 		g2.fillRect((int) this.id_border.getLayoutX(), (int) this.id_border.getLayoutY(),
 				(int) this.id_border.getWidth(), (int) this.id_border.getHeight());
 
 		// draw id image
-		if (this.idImageCoords == null) {
-			Image image = id_image.getImage();
-			this.setIdFillCoords(image);
+		double[] idImageCoords = currentCard.getIdImageCoords();
+		if (idImageCoords == null) {
+			this.setIdFillCoords(this.id_image.getImage());
+			idImageCoords = currentCard.getIdImageCoords();
 		}
 		g2.drawImage(SwingFXUtils.fromFXImage(this.id_image.getImage(), null), (int) id_image.getLayoutX(),
 				(int) id_image.getLayoutY(), (int) (id_image.getLayoutX() + id_image.getFitWidth()),
-				(int) (id_image.getLayoutY() + id_image.getFitHeight()), (int) this.idImageCoords[0],
-				(int) this.idImageCoords[1], (int) (id_image.getImage().getWidth() - this.idImageCoords[0]),
-				(int) (id_image.getImage().getHeight() - this.idImageCoords[1]), null);
+				(int) (id_image.getLayoutY() + id_image.getFitHeight()), (int) idImageCoords[0],
+				(int) idImageCoords[1], (int) (id_image.getImage().getWidth() - idImageCoords[0]),
+				(int) (id_image.getImage().getHeight() - idImageCoords[1]), null);
 
 		// draw text
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
