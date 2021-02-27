@@ -12,6 +12,7 @@ public class App extends Application {
 		Parent root = FXUtil.loadLayout("ui/App.fxml");
 		stage.setTitle("My E-Card");
 		stage.setScene(new Scene(root));
+		stage.setResizable(false);
 		stage.show();
 	}
 	
