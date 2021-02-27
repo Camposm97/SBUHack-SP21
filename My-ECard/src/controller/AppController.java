@@ -244,5 +244,34 @@ public class AppController {
 		public void onIdMouseExit() {
 			id_border.setFill(idColor);
 		}
-
+		public void onNameMouseEnter() {
+			label_0.setTextFill(javafx.scene.paint.Color.GOLDENROD);
+		}
+		public void onNameMouseExit() {
+			label_0.setTextFill(javafx.scene.paint.Color.BLACK);
+		}
+		public void onAddressMouseEnter() {
+			label_1.setTextFill(javafx.scene.paint.Color.GOLDENROD);
+		}
+		public void onAddressMouseExit() {
+			label_1.setTextFill(javafx.scene.paint.Color.BLACK);
+		}
+		public void onPhoneMouseEnter() {
+			label_2.setTextFill(javafx.scene.paint.Color.GOLDENROD);
+		}
+		public void onPhoneMouseExit() {
+			label_2.setTextFill(javafx.scene.paint.Color.BLACK);
+		}
+		public void onEmailMouseEnter() {
+			label_3.setTextFill(javafx.scene.paint.Color.GOLDENROD);
+		}
+		public void onEmailMouseExit() {
+			label_3.setTextFill(javafx.scene.paint.Color.BLACK);
+		}
+		public void onWebsiteMouseEnter() {
+			label_4.setTextFill(javafx.scene.paint.Color.GOLDENROD);
+		}
+		public void onWebsiteMouseExit() {
+			label_4.setTextFill(javafx.scene.paint.Color.BLACK);
+		}
 }

@@ -70,27 +70,27 @@
             <Button fx:id="btn_2" layoutX="1122.0" layoutY="554.0" mnemonicParsing="false" onMouseClicked="#onSubmitPhone" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
             <Button fx:id="btn_3" layoutX="1122.0" layoutY="614.0" mnemonicParsing="false" onMouseClicked="#onSubmitEmail" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
             <Button fx:id="btn_4" layoutX="1122.0" layoutY="674.0" mnemonicParsing="false" onMouseClicked="#onSubmitWebsite" prefHeight="50.0" prefWidth="66.0" text="Submit" visible="false" />
-            <Label fx:id="label_0" alignment="CENTER" layoutX="433.0" layoutY="431.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickName" prefHeight="55.0" prefWidth="700.0" text="NAME" textAlignment="CENTER">
+            <Label fx:id="label_0" alignment="CENTER" layoutX="433.0" layoutY="431.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickName" onMouseEntered="#onNameMouseEnter" onMouseExited="#onNameMouseExit" prefHeight="55.0" prefWidth="700.0" text="NAME" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_1" alignment="CENTER" layoutX="433.0" layoutY="492.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickAddress" onMouseEntered="#onAddressMouseEnter" onMouseExited="#onAddressMouseExit" prefHeight="55.0" prefWidth="700.0" text="ADDRESS" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="label_1" alignment="CENTER" layoutX="433.0" layoutY="492.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickAddress" prefHeight="55.0" prefWidth="700.0" text="ADDRESS" textAlignment="CENTER">
+            <Label fx:id="label_2" alignment="CENTER" layoutX="433.0" layoutY="552.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickPhone" onMouseEntered="#onPhoneMouseEnter" onMouseExited="#onPhoneMouseExit" prefHeight="55.0" prefWidth="700.0" text="PHONE" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="label_2" alignment="CENTER" layoutX="433.0" layoutY="552.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickPhone" prefHeight="55.0" prefWidth="700.0" text="PHONE" textAlignment="CENTER">
+            <Label fx:id="label_3" alignment="CENTER" layoutX="433.0" layoutY="612.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickEmail" onMouseEntered="#onEmailMouseEnter" onMouseExited="#onEmailMouseExit" prefHeight="55.0" prefWidth="700.0" text="EMAIL" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="label_3" alignment="CENTER" layoutX="433.0" layoutY="612.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickEmail" prefHeight="55.0" prefWidth="700.0" text="EMAIL" textAlignment="CENTER">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="label_4" alignment="CENTER" layoutX="433.0" layoutY="672.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickWebsite" prefHeight="55.0" prefWidth="700.0" text="WEBSITE" textAlignment="CENTER">
+            <Label fx:id="label_4" alignment="CENTER" layoutX="433.0" layoutY="672.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickWebsite" onMouseEntered="#onWebsiteMouseEnter" onMouseExited="#onWebsiteMouseExit" prefHeight="55.0" prefWidth="700.0" text="WEBSITE" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
