@@ -7,11 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.FXUtil;
 
 public class App extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(new File("ui/App.fxml").toURI().toURL());
+		Parent root = FXUtil.loadLayout("ui/App.fxml");
 		stage.setScene(new Scene(root));
 		stage.show();
 	}
