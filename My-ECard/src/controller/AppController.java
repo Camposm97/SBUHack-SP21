@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -34,6 +35,8 @@ import util.DataUtil;
 import util.FXUtil;
 import javafx.stage.Stage;
 import model.CardData;
+import model.ImageData;
+import model.ImageType;
 
 public class AppController {
 
@@ -110,6 +113,14 @@ public class AppController {
 			double[] bgImageCoords = currentCard.getBgImageCoords();
 			bg_image.setViewport(new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2],
 					bgImageCoords[3]));
+		//	final String FILE_TYPE = "jpg";
+		//	File file = new File(src);
+		//	BufferedImage bi = ImageIO.read(file);
+	
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, this.getFileExtension(file), baos);
+			byte[] byteArr = baos.toByteArray();
+			currentCard.setBackgroundImage(new ImageData(ImageType.Background, byteArr));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -129,6 +140,10 @@ public class AppController {
 			double[] idImageCoords = currentCard.getIdImageCoords();
 			id_image.setViewport(new Rectangle2D(idImageCoords[0], idImageCoords[1], idImageCoords[2],
 					idImageCoords[3]));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, this.getFileExtension(file), baos);
+			byte[] byteArr = baos.toByteArray();
+			currentCard.setIdImage(new ImageData(ImageType.ID, byteArr));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
