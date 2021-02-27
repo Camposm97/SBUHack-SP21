@@ -45,8 +45,9 @@ public class AppController {
 	ColorPicker id_colorPicker;
 	
 	Color bgColor = Color.BLACK;
-	double[] bgImageCoords;
+	double[] bgImageCoords = null;
 	Color idColor = Color.DODGERBLUE;
+	double[] idImageCoords = null;
 	
 	
 	@FXML
@@ -100,8 +101,8 @@ public class AppController {
             BufferedImage bufferedImage = ImageIO.read(file);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             bg_image.setImage(image);
-            double unitSize = image.getWidth() / bg_image.getFitWidth();
-            bg_image.setViewport(new Rectangle2D(0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) /2.0  , image.getWidth(), bg_image.getFitHeight() * unitSize));
+            this.setBgFillCoords(image);
+            bg_image.setViewport(new Rectangle2D(this.bgImageCoords[0],this.bgImageCoords[1],this.bgImageCoords[2],this.bgImageCoords[3]));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -116,13 +117,21 @@ public class AppController {
             BufferedImage bufferedImage = ImageIO.read(file);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             id_image.setImage(image);
-            double unitSize = image.getHeight() / id_image.getFitHeight();
-            double[] newbgImageCoords = {(image.getWidth() - (id_image.getFitWidth() * unitSize)) /2.0 , 0 , id_image.getFitWidth() * unitSize, image.getHeight()};
-            bgImageCoords = newbgImageCoords;
-            id_image.setViewport(new Rectangle2D(this.bgImageCoords[0],this.bgImageCoords[1],this.bgImageCoords[2],this.bgImageCoords[3]));
+            this.setIdFillCoords(image);
+            id_image.setViewport(new Rectangle2D(this.idImageCoords[0],this.idImageCoords[1],this.idImageCoords[2],this.idImageCoords[3]));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+	}
+	public void setIdFillCoords(Image image) {
+		double unitSize = image.getHeight() / id_image.getFitHeight();
+        double[] newIdImageCoords = {(image.getWidth() - (id_image.getFitWidth() * unitSize)) /2.0 , 0 , id_image.getFitWidth() * unitSize, image.getHeight()};
+        idImageCoords = newIdImageCoords;
+	}
+	public void setBgFillCoords(Image image) {
+		double unitSize = image.getWidth() / bg_image.getFitWidth();
+        double[] newBgImageCoords = {0, (image.getHeight() - (bg_image.getFitHeight() * unitSize)) /2.0  , image.getWidth(), bg_image.getFitHeight() * unitSize};
+        bgImageCoords = newBgImageCoords;
 	}
 
 	// I will do this :)
@@ -303,18 +312,40 @@ public class AppController {
 			g2.fillRect(0, 0, (int)bg_line.getWidth(), (int)bg_line.getHeight());
 			
 			//draw bg image
-			g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), 0, 0, 1200, 400, null);
+			if (this.bgImageCoords == null) {
+				Image image = bg_image.getImage();
+	            this.setBgFillCoords(image);
+			}
+			g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), 
+					(int)bg_image.getLayoutX(), 
+					(int)bg_image.getLayoutY(), 
+					(int)bg_image.getFitWidth(), 
+					(int)bg_image.getFitHeight(), 
+					(int)this.bgImageCoords[0], 
+					(int)this.bgImageCoords[1], 
+					(int)(bg_image.getImage().getWidth() - this.bgImageCoords[0]), 
+					(int)(bg_image.getImage().getHeight() - this.bgImageCoords[1]), 
+					null);
 			
 			//draw profileBorder
 			g2.setColor(new java.awt.Color((int)(idColor.getRed() * 255.0),(int)(idColor.getGreen()* 255.0),(int)(idColor.getBlue()* 255.0)));
 			g2.fillRect((int)this.id_border.getLayoutX(), (int)this.id_border.getLayoutY(), (int)this.id_border.getWidth(), (int)this.id_border.getHeight());
 			
 			//draw id image
+			if (this.idImageCoords == null) {
+				Image image = id_image.getImage();
+	            this.setIdFillCoords(image);
+			}
 			g2.drawImage(SwingFXUtils.fromFXImage(this.id_image.getImage(), null), 
 					(int)id_image.getLayoutX(), 
 					(int)id_image.getLayoutY(), 
-					(int)id_image.getFitWidth(), 
-					(int)id_image.getFitHeight(), 
+					(int)(id_image.getLayoutX() + id_image.getFitWidth()), 
+					(int)(id_image.getLayoutY() + id_image.getFitHeight()), 
+					(int)this.idImageCoords[0], 
+					(int)this.idImageCoords[1], 
+					(int)(id_image.getImage().getWidth() - this.idImageCoords[0]), 
+					(int)(id_image.getImage().getHeight() - this.idImageCoords[1]), 
+					//(int)this.idImageCoords[3], 
 					null);
 			//draw text
 			g2.setColor(new java.awt.Color(0,0,0));
