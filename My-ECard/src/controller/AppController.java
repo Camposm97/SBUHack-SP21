@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -23,6 +25,8 @@ import javafx.stage.Stage;
 
 public class AppController {
 	
+	@FXML
+	Pane cardPane;
 	@FXML
 	ImageView bg_image;
 	@FXML
@@ -71,6 +75,8 @@ public class AppController {
 	Label label_3;
 	@FXML
 	Label label_4;
+	
+	private BufferedImage bufferImage;
 	
 	public void importAsset(ActionEvent event) {
 		FileChooser fc = new FileChooser();
@@ -273,5 +279,33 @@ public class AppController {
 		}
 		public void onWebsiteMouseExit() {
 			label_4.setTextFill(javafx.scene.paint.Color.BLACK);
+		}
+		
+		public void onExport() {
+			this.bufferImage = new BufferedImage((int)this.cardPane.getPrefWidth(), (int)this.cardPane.getPrefHeight(), BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = this.bufferImage.createGraphics();
+			
+			
+			FileChooser fileChooser = new FileChooser();
+	        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+	        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG); 
+	        File file = fileChooser.showSaveDialog(null); 
+			
+			/**
+			JFileChooser filechooser = new JFileChooser();
+		      FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		               "JPG Images", "jpg");
+		      filechooser.setFileFilter(filter);
+		      int result = filechooser.showSaveDialog(this);
+		      if (result == JFileChooser.APPROVE_OPTION) {
+		         File saveFile = filechooser.getSelectedFile();
+		         try {
+		            ImageIO.write(bImage, "jpg", saveFile);
+		         } catch (IOException e) {
+		            e.printStackTrace();
+		         }
+		      }
+		      */
 		}
 }
