@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -367,7 +368,8 @@ public class AppController {
 			FileChooser fileChooser = new FileChooser();
 	        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
 	        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
-	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG); 
+	        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG, extFilterPDF ); 
 	        File file = fileChooser.showSaveDialog(null); 
 	        try {
 	            //ImageIO.write(bufferImage, "jpg", file);
@@ -385,6 +387,11 @@ public class AppController {
 		        	iwParam.setCompressionQuality(.9f);
 		        	
 		        	iw.write(null, new IIOImage(bufferImage, null, null), iwParam);
+	        	}
+	        	else if (extension.contentEquals("PDF")) {
+	        		ImageWriter iw = ImageIO.getImageWritersByFormatName("pdf").next();
+	        		iw.setOutput(new FileImageOutputStream(file));
+		        	iw.write(new IIOImage(bufferImage, null, null));
 	        	}
 	        	else {
 	        		ImageWriter iw = ImageIO.getImageWritersByFormatName("png").next();
