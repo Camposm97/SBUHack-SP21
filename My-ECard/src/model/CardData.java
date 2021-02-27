@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 
 public class CardData implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private ImageData idImage;
 	private ImageData backgroundImage;
 	private String name;
