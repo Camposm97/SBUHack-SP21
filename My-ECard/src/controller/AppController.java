@@ -11,10 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -31,6 +33,11 @@ public class AppController {
 	Rectangle bg_line;
 	@FXML
 	Rectangle id_border;
+	@FXML
+	ColorPicker bg_colorPicker;
+	@FXML
+	ColorPicker id_colorPicker;
+	Color idColor = Color.DODGERBLUE;
 	
 	@FXML
 	TextField tfName;
@@ -199,11 +206,30 @@ public class AppController {
 			btn_4.setVisible(false);
 		}
 		
-		public void onBbBorderClick() {
-			
+		public void onBgBorderClick() {
+			if (bg_colorPicker.isVisible()) {
+				bg_colorPicker.setVisible(false);
+			}
+			else {
+				bg_colorPicker.setVisible(true);
+			}
 		}
 		public void onIdBorderClick() {
-			
+			if (id_colorPicker.isVisible()) {
+				id_colorPicker.setVisible(false);
+			}
+			else {
+				id_colorPicker.setVisible(true);
+			}
+		}
+		public void setBgBorderColor() {
+			bg_line.setStroke(bg_colorPicker.getValue());
+			bg_colorPicker.setVisible(false);
+		}
+		public void setIdBorderColor() {
+			idColor = id_colorPicker.getValue();
+			id_border.setFill(idColor);
+			id_colorPicker.setVisible(false);
 		}
 		public void onBgMouseEnter() {
 			bg_border.setStroke(javafx.scene.paint.Color.GOLDENROD);
@@ -216,7 +242,7 @@ public class AppController {
 			bg_border.setVisible(false);
 		}
 		public void onIdMouseExit() {
-			id_border.setFill(javafx.scene.paint.Color.DODGERBLUE);
+			id_border.setFill(idColor);
 		}
 
 }
