@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -307,7 +308,7 @@ public class AppController {
 		public void onExport() {
 			this.bufferImage = new BufferedImage((int)cardPane.getPrefWidth(), (int)cardPane.getPrefHeight(), BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2 = bufferImage.createGraphics();
-			
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			//draw full white rect
 			g2.setColor(new java.awt.Color(255,255,255));
 			g2.fillRect(0, 0, (int)cardPane.getPrefWidth(), (int)cardPane.getPrefHeight());
@@ -381,7 +382,7 @@ public class AppController {
 		        	// Set the compression quality to 0.9f.
 		        	ImageWriteParam iwParam = iw.getDefaultWriteParam();
 		        	iwParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		        	iwParam.setCompressionQuality(.999f);
+		        	iwParam.setCompressionQuality(.9f);
 		        	
 		        	iw.write(null, new IIOImage(bufferImage, null, null), iwParam);
 	        	}
