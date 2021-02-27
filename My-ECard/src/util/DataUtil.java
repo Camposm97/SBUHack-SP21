@@ -10,10 +10,6 @@ import javafx.stage.FileChooser;
 import model.CardData;
 
 public class DataUtil {
-	public static void saveAs(CardData cardData) {
-		FileChooser fc = new FileChooser();
-	}
-	
 	public static void save(CardData cardData, String src) {
 		File file = new File(src);
 		try {
