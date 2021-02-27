@@ -49,7 +49,9 @@ public class CardData implements Serializable {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "CardData [name=" + name + ", message=" + message + ", email=" + email + ", address=" + address
+				+ ", phone=" + phone + ", website=" + website + ", filePath=" + filePath + "]";
+	}
 }
