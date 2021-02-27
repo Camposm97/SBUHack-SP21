@@ -55,11 +55,11 @@
                </image>
             </ImageView>
             <Button layoutX="156.0" layoutY="519.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="65.0" text="PICK" />
-            <TextField layoutX="422.0" layoutY="434.0" prefHeight="50.0" prefWidth="700.0" style="-fx-font-size: 20;" text="NAME" />
-            <TextField layoutX="422.0" layoutY="494.0" prefHeight="50.0" prefWidth="700.0" style="-fx-font-size: 20;" text="ADDRESS" />
-            <TextField layoutX="422.0" layoutY="554.0" prefHeight="50.0" prefWidth="700.0" style="-fx-font-size: 20;" text="PHONE" />
-            <TextField layoutX="422.0" layoutY="614.0" prefHeight="50.0" prefWidth="700.0" style="-fx-font-size: 20;" text="EMAIL" />
-            <TextField layoutX="422.0" layoutY="674.0" prefHeight="50.0" prefWidth="700.0" style="-fx-font-size: 20;" text="WEBSITE" />
+            <TextField fx:id="tfName" layoutX="422.0" layoutY="434.0" prefHeight="50.0" prefWidth="700.0" promptText="NAME" style="-fx-font-size: 20;" />
+            <TextField layoutX="422.0" layoutY="494.0" prefHeight="50.0" prefWidth="700.0" promptText="ADDRESS" style="-fx-font-size: 20;" />
+            <TextField layoutX="422.0" layoutY="554.0" prefHeight="50.0" prefWidth="700.0" promptText="PHONE" style="-fx-font-size: 20;" />
+            <TextField layoutX="422.0" layoutY="614.0" prefHeight="50.0" prefWidth="700.0" promptText="EMAIL" style="-fx-font-size: 20;" />
+            <TextField layoutX="422.0" layoutY="674.0" prefHeight="50.0" prefWidth="700.0" promptText="WEBSITE" style="-fx-font-size: 20;" />
          </children>
       </Pane>
    </center>
