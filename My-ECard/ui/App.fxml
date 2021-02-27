@@ -146,12 +146,6 @@
                   <Button fx:id="bgUp" layoutX="130.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="^" />
                </children>
             </HBox>
-            <Button fx:id="bgZoomIn" layoutX="833.0" layoutY="-202.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="+" />
-            <Button fx:id="btn_012" layoutX="843.0" layoutY="-192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="-" />
-            <Button fx:id="btn_0112" layoutX="873.0" layoutY="-189.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="&gt;" />
-            <Button fx:id="btn_01112" layoutX="903.0" layoutY="-189.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="&lt;" />
-            <Button fx:id="btn_011112" alignment="CENTER" layoutX="933.0" layoutY="-189.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="v" textAlignment="CENTER" />
-            <Button fx:id="btn_0111111" layoutX="963.0" layoutY="-189.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSubmitName" prefHeight="30.0" prefWidth="30.0" text="^" />
 			</children>
 		</Pane>
 	</center>
