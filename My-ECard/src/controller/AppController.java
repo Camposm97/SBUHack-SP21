@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-import java.util.Arrays;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

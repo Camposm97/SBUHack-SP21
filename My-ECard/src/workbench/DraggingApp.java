@@ -1,5 +1,6 @@
 package workbench;
 
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 public class DraggingApp extends Application {
@@ -38,11 +40,14 @@ public class DraggingApp extends Application {
         circle_Blue.setOnMousePressed(circleOnMousePressedEventHandler);
         circle_Blue.setOnMouseDragged(circleOnMouseDraggedEventHandler);
                 
-        Group root = new Group();
-        root.getChildren().addAll(circle_Red, circle_Green, circle_Blue);
+        Line line = new Line(100, 100, 200, 200);
         
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 400,350));
+        Group root = new Group();
+        root.getChildren().addAll(circle_Red, circle_Green, circle_Blue, line);
+        
+        Scene scene = new Scene(root, 400, 350);
+//        primaryStage.setResizable(false);
+        primaryStage.setScene(scene);
         
         primaryStage.setTitle("java-buddy");
         primaryStage.show();
@@ -74,8 +79,13 @@ public class DraggingApp extends Application {
             double newTranslateX = orgTranslateX + offsetX;
             double newTranslateY = orgTranslateY + offsetY;
             
-            ((Circle)(t.getSource())).setTranslateX(newTranslateX);
-            ((Circle)(t.getSource())).setTranslateY(newTranslateY);
+            Circle circle = (Circle) t.getSource();
+            circle.setTranslateX(newTranslateX);
+            circle.setTranslateY(newTranslateY);
+//            ((Circle)(t.getSource())).setTranslateX(newTranslateX);
+//            ((Circle)(t.getSource())).setTranslateY(newTranslateY);
+            
+            System.out.println(newTranslateY == t.getSceneY()/2);
         }
     };
 }

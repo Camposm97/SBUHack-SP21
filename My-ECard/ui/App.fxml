@@ -49,7 +49,7 @@
                </image>
             </ImageView>
             <Button layoutX="567.0" layoutY="325.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="65.0" text="PICK" />
-            <ImageView fitHeight="406.0" fitWidth="309.0" layoutX="34.0" layoutY="184.0" pickOnBounds="true" smooth="false">
+            <ImageView fitHeight="406.0" fitWidth="309.0" layoutX="34.0" layoutY="185.0" pickOnBounds="true" smooth="false">
                <image>
                   <Image url="@../resources/prof.jpg" />
                </image>
