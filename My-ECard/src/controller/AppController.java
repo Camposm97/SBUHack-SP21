@@ -26,9 +26,11 @@ public class AppController {
 	@FXML
 	ImageView id_image;
 	@FXML
-	Button bg_btn;
+	Rectangle bg_border;
 	@FXML
-	Button id_btn;
+	Rectangle bg_line;
+	@FXML
+	Rectangle id_border;
 	
 	@FXML
 	TextField tfName;
@@ -196,10 +198,6 @@ public class AppController {
 			tfWebsite.setVisible(false);
 			btn_4.setVisible(false);
 		}
-		@FXML
-		Rectangle bg_border;
-		@FXML
-		Rectangle id_border;
 		
 		public void onBbBorderClick() {
 			
