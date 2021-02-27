@@ -153,6 +153,14 @@ public class AppController {
 		}
 	}
 
+	public void loadFields() {
+		label_0.setText(currentCard.getName());
+		label_1.setText(currentCard.getAddress());
+		label_2.setText(currentCard.getPhone());
+		label_3.setText(currentCard.getEmail());
+		label_4.setText(currentCard.getWebsite());
+	}
+
 	public void setIdFillCoords(Image image) {
 		double unitSize = image.getHeight() / id_image.getFitHeight();
 		double[] newIdImageCoords = { (image.getWidth() - (id_image.getFitWidth() * unitSize)) / 2.0, 0,
@@ -175,7 +183,9 @@ public class AppController {
 		if (file != null) {
 			currentCard = DataUtil.load(file.getPath());
 			if (currentCard != null) {
-				
+				loadFields();
+				loadBackgroundImage();
+				loadIdImage();
 			}
 		}
 	}
@@ -187,8 +197,7 @@ public class AppController {
 	public void saveAs(ActionEvent event) {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
-		FXUtil.showWIP(); // TODO
-		File file = fc.showOpenDialog(new Stage());
+		File file = fc.showSaveDialog(new Stage());
 		if (file != null) {
 			DataUtil.save(currentCard, file.getPath());
 		}
