@@ -303,13 +303,25 @@ public class AppController {
 			//draw bg image
 			g2.drawImage(SwingFXUtils.fromFXImage(this.bg_image.getImage(), null), 0, 0, 1200, 400, null);
 			
+			//draw profileBorder
+			g2.setColor(new java.awt.Color((int)(idColor.getRed() * 255.0),(int)(idColor.getGreen()* 255.0),(int)(idColor.getBlue()* 255.0)));
+			g2.fillRect((int)this.id_border.getLayoutX(), (int)this.id_border.getLayoutY(), (int)this.id_border.getWidth(), (int)this.id_border.getHeight());
+			
+			//draw id image
+			g2.drawImage(SwingFXUtils.fromFXImage(this.id_image.getImage(), null), 
+					(int)id_image.getLayoutX(), 
+					(int)id_image.getLayoutY(), 
+					(int)id_image.getFitWidth(), 
+					(int)id_image.getFitHeight(), 
+					null);
+			
 			FileChooser fileChooser = new FileChooser();
 	        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
 	        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
 	        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG); 
 	        File file = fileChooser.showSaveDialog(null); 
 	        try {
-	            ImageIO.write(bufferImage, "jpg", file);
+	            ImageIO.write(bufferImage, "png", file);
 	         } catch (IOException e) {
 	            e.printStackTrace();
 	         }
