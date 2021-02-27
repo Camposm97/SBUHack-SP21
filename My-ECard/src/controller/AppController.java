@@ -50,10 +50,18 @@ public class AppController {
 		System.out.println(file);
 	}
 	
+	// I will do this :)
+	public void onNameEntered(ActionEvent event) {
+		onSubmitName();
+		onClickAddress();
+		tfAddress.requestFocus();
+	}
+	
 	public void onClickName() {
 		tfName.setVisible(true);
 		btn_0.setVisible(true);
 		label_0.setVisible(false);
+		tfName.requestFocus();
 	}
 	public void onSubmitName() {
 		label_0.setVisible(true);
