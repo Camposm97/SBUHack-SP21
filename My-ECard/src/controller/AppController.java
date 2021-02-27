@@ -245,7 +245,7 @@ public class AppController {
 			id_border.setFill(idColor);
 		}
 		public void onNameMouseEnter() {
-			label_0.setTextFill(javafx.scene.paint.Color.GOLDENROD);
+			label_0.setTextFill(javafx.scene.paint.Color.CHOCOLATE);
 		}
 		public void onNameMouseExit() {
 			label_0.setTextFill(javafx.scene.paint.Color.BLACK);
