@@ -29,7 +29,7 @@
 								<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
-						<MenuItem mnemonicParsing="false" onAction="#closeFIle" text="Close ECard">
+						<MenuItem mnemonicParsing="false" onAction="#closeFile" text="Close ECard">
 							<accelerator>
 								<KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
