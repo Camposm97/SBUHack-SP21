@@ -181,7 +181,7 @@ public class AppController {
 			width = image.getWidth();
 			height = id_image.getFitHeight() * unitSize;
 			id_image.setLayoutX(-15);
-			id_image.setLayoutY(235);
+			id_image.setLayoutY(205);
 		} else {
 			unitSize = image.getHeight() / id_image.getFitHeight();
 			xPos = (image.getWidth() - (id_image.getFitWidth() * unitSize)) / 2.0;
@@ -189,7 +189,7 @@ public class AppController {
 			width = id_image.getFitWidth() * unitSize;
 			height = image.getHeight();
 			id_image.setLayoutX(35);
-			id_image.setLayoutY(185);
+			id_image.setLayoutY(155);
 		}
 		double[] newIdImageCoords = { xPos, yPos, width, height };
 		currentCard.setIdImageCoords(newIdImageCoords);
@@ -222,8 +222,11 @@ public class AppController {
 				InputStream is1 = new ByteArrayInputStream(idImageBytes);
 				Image idImage = new Image(is1);
 				id_image.setImage(idImage);
+				this.setRotation();
 				this.updateIdCrop();
-				
+				this.onIdMouseExit();
+				double[] color = currentCard.getBgColor();
+				this.bg_line.setStroke(new Color(color[0],color[1],color[2],color[3]));
 				byte[] backgroundImageBytes = currentCard.getBackgroundImage().getBytes();
 				InputStream is2 = new ByteArrayInputStream(backgroundImageBytes);
 				Image backgroundImage = new Image(is2);
@@ -303,6 +306,7 @@ public class AppController {
 		currentCard.setName(tfName.getText());
 		tfName.setVisible(false);
 		btn_0.setVisible(false);
+
 	}
 
 	public void onClickAddress() {
@@ -501,7 +505,7 @@ public class AppController {
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		double[] textColor = currentCard.getFontColor(); 
 		g2.setColor(new java.awt.Color((int)(textColor[0] * 255.0), (int)(textColor[1] * 255.0), (int) (textColor[2] * 255.0)));
-		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize() + 4));
+		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize() + (currentCard.getFontSize() / 4)));
 		drawCenteredString(g2, label_0, g2.getFont());
 		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize()));
 		drawCenteredString(g2, label_1, g2.getFont());
@@ -556,12 +560,22 @@ public class AppController {
 
 	public void rotate(ActionEvent event) {
 		id_image.setRotate(id_image.getRotate() + 90);
+		currentCard.setIdRotation((int)id_image.getRotate());
 		double w = id_image.getFitWidth();
 		id_image.setFitWidth(id_image.getFitHeight());
 		id_image.setFitHeight(w);
 		setIdCrop(id_image.getImage());
 		updateIdCrop();
 		// id_image.setRotate(id_image.getRotate() - 90);
+	}
+	public void setRotation() {
+		id_image.setRotate(0);
+		while (true) {
+			rotate(null);
+			if ((int)id_image.getRotate() >= currentCard.getIdRotation()) {
+				break;
+			}
+		}
 	}
 
 	public void drawCenteredString(Graphics2D g2, Label label, Font font) {
@@ -743,7 +757,7 @@ public class AppController {
 	}
 	public void plusTextSize() {
 		currentCard.setFontSize(currentCard.getFontSize() + 1);
-		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + 4));
+		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + (currentCard.getFontSize() / 4)));
 		this.label_1.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_2.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_3.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
@@ -752,7 +766,7 @@ public class AppController {
 
 	public void minusTextSize() {
 		currentCard.setFontSize(currentCard.getFontSize() - 1);
-		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + 4));
+		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + (currentCard.getFontSize() / 4)));
 		this.label_1.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_2.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_3.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
