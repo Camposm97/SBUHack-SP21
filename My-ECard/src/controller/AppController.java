@@ -13,11 +13,13 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 
+import app.App;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -112,6 +114,16 @@ public class AppController {
 		FileChooser fc = new FileChooser();
 		File file = fc.showOpenDialog(new Stage());
 		System.out.println(file);
+	}
+
+	public void displayPreBuild(ActionEvent event) {
+		Parent root = FXUtil.loadLayout("ui/App.fxml");
+		FXUtil.changeScene(label_0.getScene(), root);
+	}
+
+	public void displayDragBuild(ActionEvent event) {
+		Parent root = FXUtil.loadLayout("ui/Dragger.fxml");
+		FXUtil.changeScene(label_0.getScene(), root);
 	}
 
 	public void loadBackgroundImage() {

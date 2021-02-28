@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Dialog;
@@ -30,6 +31,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import static javafx.collections.FXCollections.observableList;
 
 public class FXUtil {
+	public static void changeScene(Scene scene, Parent root) {
+		scene.setRoot(root);
+	}
+
 	public static Parent loadLayout(String path) {
 		try {
 			File file = new File(path);

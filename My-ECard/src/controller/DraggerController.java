@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -31,11 +32,14 @@ public class DraggerController {
         });
     }
 
-    public void newCard(ActionEvent event) {
-        if (!group.getChildren().isEmpty()) {
-            group.getChildren().clear();
-            currentCard = new DraggedCardData();
-        }
+    public void displayPreBuild(ActionEvent event) {
+        Parent root = FXUtil.loadLayout("ui/App.fxml");
+        FXUtil.changeScene(group.getScene(), root);
+    }
+
+    public void displayDragBuild(ActionEvent event) {
+        Parent root = FXUtil.loadLayout("ui/Dragger.fxml");
+        FXUtil.changeScene(group.getScene(), root);
     }
 
     public void openFile(ActionEvent event) {
