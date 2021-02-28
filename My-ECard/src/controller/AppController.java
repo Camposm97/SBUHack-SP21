@@ -218,8 +218,11 @@ public class AppController {
 				InputStream is1 = new ByteArrayInputStream(idImageBytes);
 				Image idImage = new Image(is1);
 				id_image.setImage(idImage);
+				this.setRotation();
 				this.updateIdCrop();
-				
+				this.onIdMouseExit();
+				double[] color = currentCard.getBgColor();
+				this.bg_line.setStroke(new Color(color[0],color[1],color[2],color[3]));
 				byte[] backgroundImageBytes = currentCard.getBackgroundImage().getBytes();
 				InputStream is2 = new ByteArrayInputStream(backgroundImageBytes);
 				Image backgroundImage = new Image(is2);
@@ -552,12 +555,19 @@ public class AppController {
 
 	public void rotate(ActionEvent event) {
 		id_image.setRotate(id_image.getRotate() + 90);
+		currentCard.setIdRotation((int)id_image.getRotate());
 		double w = id_image.getFitWidth();
 		id_image.setFitWidth(id_image.getFitHeight());
 		id_image.setFitHeight(w);
 		setIdCrop(id_image.getImage());
 		updateIdCrop();
 		// id_image.setRotate(id_image.getRotate() - 90);
+	}
+	public void setRotation() {
+		id_image.setRotate(0);
+		while ((int)id_image.getRotate() < currentCard.getIdRotation()) {
+			rotate(null);
+		}
 	}
 
 	public void drawCenteredString(Graphics2D g2, Label label, Font font) {
