@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DraggerController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
 	<top>
 		<MenuBar BorderPane.alignment="CENTER">
 			<menus>
@@ -47,7 +47,7 @@
 							</accelerator>
 						</MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" onAction="#export" text="Export ECard" />
+						<MenuItem mnemonicParsing="false" onAction="#onExport" text="Export ECard" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" onAction="#exitApp" text="Exit">
 							<accelerator>
