@@ -105,6 +105,8 @@ public class AppController {
 
 	public AppController() {
 		currentCard = new CardData();
+		this.minusTextSize();
+		this.plusTextSize();
 	}
 
 	private BufferedImage bufferImage;
@@ -163,6 +165,11 @@ public class AppController {
 		label_2.setText(currentCard.getPhone());
 		label_3.setText(currentCard.getEmail());
 		label_4.setText(currentCard.getWebsite());
+		tfName.setText(currentCard.getName());
+		tfAddress.setText(currentCard.getAddress());
+		tfPhone.setText(currentCard.getPhone());
+		tfEmail.setText(currentCard.getEmail());
+		tfWebsite.setText(currentCard.getWebsite());
 	}
 
 	public void setIdCrop(Image image) {
@@ -177,7 +184,7 @@ public class AppController {
 			width = image.getWidth();
 			height = id_image.getFitHeight() * unitSize;
 			id_image.setLayoutX(-15);
-			id_image.setLayoutY(235);
+			id_image.setLayoutY(205);
 		} else {
 			unitSize = image.getHeight() / id_image.getFitHeight();
 			xPos = (image.getWidth() - (id_image.getFitWidth() * unitSize)) / 2.0;
@@ -185,7 +192,7 @@ public class AppController {
 			width = id_image.getFitWidth() * unitSize;
 			height = image.getHeight();
 			id_image.setLayoutX(35);
-			id_image.setLayoutY(185);
+			id_image.setLayoutY(155);
 		}
 		double[] newIdImageCoords = { xPos, yPos, width, height };
 		currentCard.setIdImageCoords(newIdImageCoords);
@@ -302,6 +309,7 @@ public class AppController {
 		currentCard.setName(tfName.getText());
 		tfName.setVisible(false);
 		btn_0.setVisible(false);
+
 	}
 
 	public void onClickAddress() {
@@ -500,7 +508,7 @@ public class AppController {
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		double[] textColor = currentCard.getFontColor(); 
 		g2.setColor(new java.awt.Color((int)(textColor[0] * 255.0), (int)(textColor[1] * 255.0), (int) (textColor[2] * 255.0)));
-		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize() + 4));
+		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize() + (currentCard.getFontSize() / 4)));
 		drawCenteredString(g2, label_0, g2.getFont());
 		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize()));
 		drawCenteredString(g2, label_1, g2.getFont());
@@ -565,8 +573,11 @@ public class AppController {
 	}
 	public void setRotation() {
 		id_image.setRotate(0);
-		while ((int)id_image.getRotate() < currentCard.getIdRotation()) {
+		while (true) {
 			rotate(null);
+			if ((int)id_image.getRotate() >= currentCard.getIdRotation()) {
+				break;
+			}
 		}
 	}
 
@@ -749,7 +760,7 @@ public class AppController {
 	}
 	public void plusTextSize() {
 		currentCard.setFontSize(currentCard.getFontSize() + 1);
-		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + 4));
+		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + (currentCard.getFontSize() / 4)));
 		this.label_1.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_2.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_3.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
@@ -758,7 +769,7 @@ public class AppController {
 
 	public void minusTextSize() {
 		currentCard.setFontSize(currentCard.getFontSize() - 1);
-		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + 4));
+		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + (currentCard.getFontSize() / 4)));
 		this.label_1.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_2.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
 		this.label_3.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
