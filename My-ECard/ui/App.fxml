@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -82,11 +83,12 @@
 				</ImageView>
 				<Rectangle fx:id="bg_border" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#2197ff00" height="405.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" visible="false" width="1200.0" />
 				<Rectangle fx:id="id_border" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="430.0" layoutX="30.0" layoutY="180.0" onMouseClicked="#onIdBorderClick" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="330.0" />
-				<ImageView fx:id="id_image" fitHeight="420.0" fitWidth="320.0" layoutX="34.0" layoutY="185.0" onMouseClicked="#loadIdImage" onMouseEntered="#onIdMouseEnter" onMouseExited="#onIdMouseExit" pickOnBounds="true" smooth="false">
+				<ImageView fx:id="id_image" fitHeight="420.0" fitWidth="320.0" layoutX="35.0" layoutY="185.0" onMouseClicked="#loadIdImage" onMouseEntered="#onIdMouseEnter" onMouseExited="#onIdMouseExit" pickOnBounds="true" smooth="false">
 					<image>
 						<Image url="@../resources/default_id.jpg" />
 					</image>
 				</ImageView>
+            <StackPane layoutX="35.0" layoutY="185.0" prefHeight="150.0" prefWidth="200.0" />
 				<TextField fx:id="tfName" alignment="CENTER" layoutX="422.0" layoutY="434.0" onAction="#onNameEntered" prefHeight="50.0" prefWidth="700.0" promptText="NAME" style="-fx-font-size: 20;" visible="false" />
 				<TextField fx:id="tfAddress" alignment="CENTER" layoutX="422.0" layoutY="494.0" onAction="#onAddressEntered" prefHeight="50.0" prefWidth="700.0" promptText="ADDRESS" style="-fx-font-size: 20;" visible="false" />
 				<TextField fx:id="tfPhone" alignment="CENTER" layoutX="422.0" layoutY="554.0" onAction="#onPhoneEntered" prefHeight="50.0" prefWidth="700.0" promptText="PHONE" style="-fx-font-size: 20;" visible="false" />
