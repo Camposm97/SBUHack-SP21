@@ -1,13 +1,17 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.DraggedCardData;
@@ -17,12 +21,15 @@ import util.DataUtil;
 import util.FXUtil;
 import workbench.ImageViewBox;
 
-import javax.xml.crypto.Data;
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 public class DraggerController {
     public static DraggedCardData currentCard;
+    @FXML
+    AnchorPane theAnchor;
     @FXML
     Group group;
 
@@ -63,12 +70,12 @@ public class DraggerController {
     }
 
     public void closeFile(ActionEvent event) {
-
+        displayDragBuild(event);
     }
 
-    public void save(ActionEvent event) {
-
-    }
+//    public void save(ActionEvent event) {
+//
+//    }
 
     public void saveAs(ActionEvent event) {
         FileChooser fc = new FileChooser();
@@ -90,7 +97,17 @@ public class DraggerController {
     }
 
     public void export(ActionEvent event) {
-        // TODO
+        WritableImage writableImage = theAnchor.snapshot(new SnapshotParameters(), null);
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png"));
+        File file = fc.showSaveDialog(new Stage());
+        if (file != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void exitApp(ActionEvent event) {
