@@ -105,8 +105,6 @@ public class AppController {
 
 	public AppController() {
 		currentCard = new CardData();
-		this.minusTextSize();
-		this.plusTextSize();
 	}
 
 	private BufferedImage bufferImage;
