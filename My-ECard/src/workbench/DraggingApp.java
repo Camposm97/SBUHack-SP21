@@ -5,10 +5,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -20,11 +22,14 @@ public class DraggingApp extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Group root = new Group();
-        scene = new Scene(root, 400, 350);
+        BorderPane root =(BorderPane) FXUtil.loadLayout("ui/Dragger.fxml");
+        Group group = (Group) root.getCenter();
+        scene = new Scene(root, 800, 700);
         Image image = FXUtil.loadImage("resources/prof.jpg");
-        ImageViewBox imageViewBox = new ImageViewBox(image, root, scene);
-        root.getChildren().add(imageViewBox.getImageView());
+        ImageViewBox imageViewBox = new ImageViewBox(image, group, scene);
+        ImageView iv = imageViewBox.getImageView();
+
+        group.getChildren().add(iv);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("java-buddy");

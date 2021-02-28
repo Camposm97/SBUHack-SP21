@@ -18,11 +18,12 @@ public class ImageViewBox {
         iv = new ImageView(image);
         this.root = root;
         this.scene = scene;
-        iv.setPreserveRatio(true);
-        iv.setFitHeight(100);
-        iv.setFitWidth(100);
         xLine = new Line(0, scene.getHeight() / 2, scene.getWidth(), scene.getHeight() / 2);
         yLine = new Line(scene.getWidth() / 2, 0, scene.getWidth() / 2, scene.getHeight());
+        addListeners();
+    }
+
+    private void addListeners() {
         iv.setOnMousePressed(e -> {
             orgSceneX = e.getSceneX();
             orgSceneY = e.getSceneY();
@@ -37,13 +38,12 @@ public class ImageViewBox {
 
             iv.setTranslateX(newTranslateX);
             iv.setTranslateY(newTranslateY);
-            double xHalfScene = scene.getWidth() / 2;
-            double yHalfScene = scene.getHeight() / 2;
-            double xCenter = iv.getTranslateX() + iv.getFitHeight() / 2;
-            double yCenter = iv.getTranslateY() + iv.getFitHeight() / 2;
+            double xHalfScene = scene.getWidth() / 2.0;
+            double yHalfScene = scene.getHeight() / 2.0;
+            double xCenter = iv.getTranslateX() + iv.getFitWidth() / 2.0;
+            double yCenter = iv.getTranslateY() + iv.getFitHeight() / 2.0;
             // Check if image is touching y-axis
             if (isNearAxis(xCenter, xHalfScene)) {
-//            if (xCenter <= xHalfScene + 15 && xCenter >= xHalfScene - 15) {
                 iv.setTranslateX(xHalfScene - (iv.getFitWidth() / 2.0));
                 if (!root.getChildren().contains(yLine)) {
                     root.getChildren().add(yLine);
