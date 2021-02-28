@@ -125,6 +125,7 @@
             <Button fx:id="idOptions" layoutX="314.0" layoutY="564.0" mnemonicParsing="false" onAction="#onIdOptionsClick" prefHeight="30.0" prefWidth="30.0" text="..." />
             <HBox fx:id="idOptionsContainer" alignment="CENTER_LEFT" fillHeight="false" layoutX="133.0" layoutY="561.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="180.0" visible="false">
                <children>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#rotate" prefHeight="30.0" prefWidth="60.0" text="Rotate" />
       				<Button fx:id="idZoomIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#zoomInId" prefHeight="30.0" prefWidth="30.0" text="+" HBox.hgrow="NEVER" />
                   <Button fx:id="idZoomOut" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#zoomOutId" prefHeight="30.0" prefWidth="30.0" text="-" />
                   <Button fx:id="idRight" layoutX="40.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#shiftRightId" prefHeight="30.0" prefWidth="30.0" text="&gt;" />

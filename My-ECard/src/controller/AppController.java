@@ -514,6 +514,11 @@ public class AppController {
 			return "";
 	}
 
+	public void rotate(ActionEvent event) {
+		id_image.setRotate(id_image.getRotate() + 90);
+//		setIdCrop(id_image.getImage());
+//		updateIdCrop();
+	}
 	public void drawCenteredString(Graphics2D g2, Label label, Font font) {
 		FontMetrics metrics = g2.getFontMetrics(font);
 		int x = (int) (label.getLayoutX() + (label.getWidth() - metrics.stringWidth(label.getText())) / 2);
