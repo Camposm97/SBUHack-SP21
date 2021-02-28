@@ -48,6 +48,10 @@ public class ImageViewBox {
         return imageType;
     }
 
+    public DraggedImageData getDraggedImageData() {
+        return draggedImageData;
+    }
+
     private void addListeners() {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("Delete");

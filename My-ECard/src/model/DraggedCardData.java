@@ -1,6 +1,6 @@
 package model;
 
-import workbench.ImageViewBox;
+import javafx.scene.Group;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -29,5 +29,22 @@ public class DraggedCardData implements Serializable {
 
     public void removeImage(DraggedImageData imageData){
         System.out.println(imageDataList.remove(imageData));
+    }
+
+    public void display(Group group) {
+        for (TextData textData : textDataList) {
+            textData.display(group);
+        }
+        for (DraggedImageData imageData : imageDataList) {
+
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "DraggedCardData{" +
+                "textDataList=" + textDataList +
+                ", imageDataList=" + imageDataList +
+                '}';
     }
 }

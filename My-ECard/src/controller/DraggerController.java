@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -11,9 +12,11 @@ import javafx.stage.Stage;
 import model.DraggedCardData;
 import model.ImageType;
 import model.TextBox;
+import util.DataUtil;
 import util.FXUtil;
 import workbench.ImageViewBox;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.util.Optional;
 
@@ -31,11 +34,28 @@ public class DraggerController {
     public void newCard(ActionEvent event) {
         if (!group.getChildren().isEmpty()) {
             group.getChildren().clear();
+            currentCard = new DraggedCardData();
         }
     }
 
     public void openFile(ActionEvent event) {
-
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(FXUtil.getSaveExtFilter());
+        File file = fc.showOpenDialog(new Stage());
+        if (file != null) {
+            currentCard = (DraggedCardData) DataUtil.loadObject(file.getPath());
+            group.getChildren().clear();
+            if (currentCard != null) {
+                currentCard.display(group);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Failed to open file!");
+                alert.setContentText("Tried to open from " + file);
+                alert.showAndWait();
+                currentCard = new DraggedCardData();
+                group.getChildren().clear();
+            }
+        }
     }
 
     public void closeFile(ActionEvent event) {
@@ -47,7 +67,22 @@ public class DraggerController {
     }
 
     public void saveAs(ActionEvent event) {
-
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(FXUtil.getSaveExtFilter());
+        File file = fc.showSaveDialog(new Stage());
+        if (file != null) {
+            boolean saved = DataUtil.save(currentCard, file.getPath());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            if (saved) {
+                alert.setHeaderText("Save Successful");
+                alert.setContentText("Saved to " + file);
+            } else {
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setHeaderText("Save Failed");
+                alert.setContentText("Tried to save to " + file);
+            }
+            alert.showAndWait();
+        }
     }
 
     public void export(ActionEvent event) {
