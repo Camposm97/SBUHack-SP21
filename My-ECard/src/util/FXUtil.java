@@ -1,11 +1,13 @@
 package util;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -18,6 +20,17 @@ public class FXUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Pane();
+		}
+	}
+
+	public static Image loadImage(String src) {
+		try {
+			File file = new File(src);
+			FileInputStream fis = new FileInputStream(file);
+			Image image = new Image(fis);
+			return image;
+		} catch (Exception e) {
+			return null;
 		}
 	}
 	
