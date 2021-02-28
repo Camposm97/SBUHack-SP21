@@ -1,24 +1,33 @@
 package model;
 
+import javafx.embed.swing.SwingFXUtils;
+import workbench.ImageViewBox;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 public class DraggedImageData implements Serializable {
-    private String name;
     private byte[] imageData;
     private Point position;
 
-    public DraggedImageData(String name, byte[] imageData, Point position) {
-        this.name = name;
+    public DraggedImageData(ImageViewBox imageViewBox) {
+        try {
+            final String FILE_TYPE = imageViewBox.getImageType().toString().toLowerCase();
+            BufferedImage bi = SwingFXUtils.fromFXImage(imageViewBox.getImageView().getImage(), null);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bi, FILE_TYPE, baos);
+            this.imageData = baos.toByteArray();
+            this.position = new Point(imageViewBox.getImageView().getTranslateX(), imageViewBox.getImageView().getTranslateY());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public DraggedImageData(byte[] imageData, Point position) {
         this.imageData = imageData;
         this.position = position;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public byte[] getImageData() {

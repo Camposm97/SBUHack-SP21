@@ -1,36 +1,26 @@
-package workbench;
+package model;
 
 import com.sun.istack.internal.NotNull;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
-import model.DraggedCardData;
-import model.DraggedImageData;
-import model.ImageType;
+import util.FXUtil;
 
-import javax.smartcardio.Card;
-
-public class ImageViewBox {
+public class TextBox {
     private double orgSceneX, orgSceneY, orgTranslateX, orgTranslateY;
-    private ImageView iv;
-    private ImageType imageType;
+    private Label label;
     private Line xLine, yLine;
     private Group root;
     private Pane parent;
     private DraggedCardData cardData;
-    private DraggedImageData draggedImageData;
+    private TextData textData;
 
-    public ImageViewBox(@NotNull Image image, @NotNull ImageType imageType, @NotNull Group root, @NotNull DraggedCardData cardData) {
-        iv = new ImageView(image);
-        iv.setFitWidth(image.getWidth());
-        iv.setFitHeight(image.getHeight());
-        this.imageType = imageType;
+    public TextBox(String string, @NotNull Group root, @NotNull DraggedCardData cardData) {
+        label = new Label(string);
         this.root = root;
         this.parent = (Pane) root.getParent();
         this.cardData = cardData;
@@ -38,50 +28,52 @@ public class ImageViewBox {
         xLine.setStroke(Color.RED);
         yLine = new Line(parent.getWidth() / 2, 0, parent.getWidth() / 2, parent.getHeight());
         yLine.setStroke(Color.RED);
-        this.draggedImageData = new DraggedImageData(this);
-        this.cardData.addImage(draggedImageData);
-        root.getChildren().add(iv);
+        this.textData = new TextData(this);
+        cardData.addText(textData);
+        root.getChildren().add(label);
         addListeners();
-    }
-
-    public ImageType getImageType() {
-        return imageType;
     }
 
     private void addListeners() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Delete");
-        contextMenu.getItems().addAll(item1);
-        iv.setOnContextMenuRequested(e -> {
-            contextMenu.show(iv, e.getScreenX(), e.getScreenY());
+        MenuItem item1 = new MenuItem("Change Font");
+        MenuItem item2 = new MenuItem("Change Color");
+        MenuItem item3 = new MenuItem("Delete");
+        item3.setOnAction(e -> {
+            root.getChildren().remove(label);
+            cardData.removeText(textData);
+        });
+        item2.setOnAction(e -> {
+            FXUtil.showColorDialog(label);
         });
         item1.setOnAction(e -> {
-            root.getChildren().remove(iv);
-            cardData.removeImage(draggedImageData);
+            FXUtil.showFontDialog(label);
         });
-        iv.setOnMousePressed(e -> {
+        contextMenu.getItems().addAll(item1, item2, item3);
+        label.setContextMenu(contextMenu);
+        label.setOnMousePressed(e -> {
             if (e.isPrimaryButtonDown()) {
                 orgSceneX = e.getSceneX();
                 orgSceneY = e.getSceneY();
-                orgTranslateX = ((ImageView)(e.getSource())).getTranslateX();
-                orgTranslateY = ((ImageView)(e.getSource())).getTranslateY();
+                orgTranslateX = ((Label) (e.getSource())).getTranslateX();
+                orgTranslateY = ((Label) (e.getSource())).getTranslateY();
             }
         });
-        iv.setOnMouseDragged(e -> {
+        label.setOnMouseDragged(e -> {
             double offsetX = e.getSceneX() - orgSceneX;
             double offsetY = e.getSceneY() - orgSceneY;
             double newTranslateX = orgTranslateX + offsetX;
             double newTranslateY = orgTranslateY + offsetY;
 
-            iv.setTranslateX(newTranslateX);
-            iv.setTranslateY(newTranslateY);
+            label.setTranslateX(newTranslateX);
+            label.setTranslateY(newTranslateY);
             double xHalfScene = parent.getWidth() / 2.0;
             double yHalfScene = parent.getHeight() / 2.0;
-            double xCenter = iv.getTranslateX() + iv.getFitWidth() / 2.0;
-            double yCenter = iv.getTranslateY() + iv.getFitHeight() / 2.0;
+            double xCenter = label.getTranslateX() + label.getWidth() / 2.0;
+            double yCenter = label.getTranslateY() + label.getHeight() / 2.0;
             // Check if image is touching y-axis
             if (isNearAxis(xCenter, xHalfScene)) {
-                iv.setTranslateX(xHalfScene - (iv.getFitWidth() / 2.0));
+                label.setTranslateX(xHalfScene - (label.getWidth() / 2.0));
                 if (!root.getChildren().contains(yLine)) {
                     root.getChildren().add(yLine);
                 }
@@ -91,7 +83,7 @@ public class ImageViewBox {
 
             // Check if image is touching x-axis
             if (isNearAxis(yCenter, yHalfScene)) {
-                iv.setTranslateY(yHalfScene - (iv.getFitHeight() / 2.0));
+                label.setTranslateY(yHalfScene - (label.getHeight() / 2.0));
                 if (!root.getChildren().contains(xLine)) {
                     root.getChildren().add(xLine);
                 }
@@ -99,14 +91,14 @@ public class ImageViewBox {
                 root.getChildren().remove(xLine);
             }
         });
-        iv.setOnMouseReleased(e ->{
+        label.setOnMouseReleased(e -> {
             root.getChildren().remove(xLine);
             root.getChildren().remove(yLine);
         });
     }
 
-    public ImageView getImageView() {
-        return iv;
+    public Label getLabel() {
+        return label;
     }
 
     public boolean isNearAxis(double centerCoord, double sceneCoord) {

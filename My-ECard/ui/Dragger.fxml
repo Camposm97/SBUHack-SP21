@@ -6,15 +6,17 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.input.KeyCodeCombination?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DraggerController">
-    <top>
-        <MenuBar BorderPane.alignment="CENTER">
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DraggerController">
+   <children>
+        <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" onAction="#newCard" text="New" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open ECard">
                             <accelerator>
@@ -49,18 +51,17 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#addText" text="Add Text" />
+                  <MenuItem mnemonicParsing="false" onAction="#addImage" text="Add Image" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-    </top>
-   <center>
-      <Group BorderPane.alignment="CENTER" />
-   </center>
-</BorderPane>
+      <AnchorPane layoutX="25.0" layoutY="50.0" prefHeight="600.0" prefWidth="1050.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="600.0" opacity="0.5" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" width="1050.0" />
+            <Group fx:id="group" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,5 +1,5 @@
 package model;
 
 public enum ImageType {
-	ID, Background;
+	ID, Background, PNG, JPG;
 }

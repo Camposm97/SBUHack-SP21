@@ -29,7 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import util.DataUtil;
 import util.FXUtil;
 import javafx.stage.Stage;
@@ -163,6 +162,11 @@ public class AppController {
 		label_2.setText(currentCard.getPhone());
 		label_3.setText(currentCard.getEmail());
 		label_4.setText(currentCard.getWebsite());
+		tfName.setText(currentCard.getName());
+		tfAddress.setText(currentCard.getAddress());
+		tfPhone.setText(currentCard.getPhone());
+		tfEmail.setText(currentCard.getEmail());
+		tfWebsite.setText(currentCard.getWebsite());
 	}
 
 	public void setIdCrop(Image image) {
@@ -201,7 +205,7 @@ public class AppController {
 
 	public void openFile(ActionEvent event) {
 		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
+		fc.getExtensionFilters().add(FXUtil.getSaveExtFilter());
 		File file = fc.showOpenDialog(new Stage());
 		if (file != null) {
 			currentCard = DataUtil.load(file.getPath());
@@ -235,7 +239,7 @@ public class AppController {
 
 	public void saveAs(ActionEvent event) {
 		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
+		fc.getExtensionFilters().add(FXUtil.getSaveExtFilter());
 		File file = fc.showSaveDialog(new Stage());
 		if (file != null) {
 			currentCard.setFilePath(file.getPath());
