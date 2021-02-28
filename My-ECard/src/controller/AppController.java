@@ -60,6 +60,8 @@ public class AppController {
 	ColorPicker text_colorPicker;
 	
 	Color fontColor = javafx.scene.paint.Color.BLACK;
+	double defaultFieldX = 433.0;
+	double defaultFieldY = 431.0;
 
 	@FXML
 	TextField tfName;
@@ -204,21 +206,25 @@ public class AppController {
 		if (file != null) {
 			currentCard = DataUtil.load(file.getPath());
 			if (currentCard != null) {
+				
 				loadFields();
+				double[] textColor = currentCard.getFontColor();
+				this.updateTextColor(new Color(textColor[0],textColor[1],textColor[2],textColor[3]));
+				this.setFieldPossitions();
+				this.plusTextSize();
+				this.minusTextSize();
+				
 				byte[] idImageBytes = currentCard.getIdImage().getBytes();
 				InputStream is1 = new ByteArrayInputStream(idImageBytes);
 				Image idImage = new Image(is1);
 				id_image.setImage(idImage);
-				this.setIdCrop(idImage);
 				this.updateIdCrop();
+				
 				byte[] backgroundImageBytes = currentCard.getBackgroundImage().getBytes();
 				InputStream is2 = new ByteArrayInputStream(backgroundImageBytes);
 				Image backgroundImage = new Image(is2);
 				bg_image.setImage(backgroundImage);
-				this.setBgCrop(backgroundImage);
-				double[] bgImageCoords = currentCard.getBgImageCoords();
-				bg_image.setViewport(
-						new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2], bgImageCoords[3]));
+				this.updateBgCrop();
 			}
 		}
 	}
@@ -232,13 +238,19 @@ public class AppController {
 		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
 		File file = fc.showSaveDialog(new Stage());
 		if (file != null) {
+			currentCard.setFilePath(file.getPath());
 			DataUtil.save(currentCard, file.getPath());
 		}
 	}
 
 	public void save(ActionEvent event) {
-		// TODO Needs a path to save to without FileChooser
-		FXUtil.showWIP();
+		if (currentCard.getFilePath() != null) {
+			DataUtil.save(currentCard, currentCard.getFilePath());
+		}
+		else {
+			saveAs(null);
+		}
+
 	}
 
 	public void exitApp(ActionEvent event) {
@@ -826,10 +838,44 @@ public class AppController {
 		currentCard.setFontColor(color);
 	}
 	public void updateTextColor(Color textColor) {
+		this.fontColor = textColor;
 		this.label_0.setTextFill(textColor);
 		this.label_1.setTextFill(textColor);
 		this.label_2.setTextFill(textColor);
 		this.label_3.setTextFill(textColor);
 		this.label_4.setTextFill(textColor);
+	}
+	public void setFieldPossitions() {
+		this.label_0.setLayoutY(defaultFieldY + currentCard.getyTextOffset());
+		this.label_1.setLayoutY(defaultFieldY + 60 + currentCard.getyTextOffset());
+		this.label_2.setLayoutY(defaultFieldY + 120 + currentCard.getyTextOffset());
+		this.label_3.setLayoutY(defaultFieldY + 180 + currentCard.getyTextOffset());
+		this.label_4.setLayoutY(defaultFieldY + 240 + currentCard.getyTextOffset());
+		this.tfName.setLayoutY(defaultFieldY + currentCard.getyTextOffset());
+		this.tfAddress.setLayoutY(defaultFieldY + 60 + currentCard.getyTextOffset());
+		this.tfPhone.setLayoutY(defaultFieldY + 120 +currentCard.getyTextOffset());
+		this.tfEmail.setLayoutY(defaultFieldY + 180 +currentCard.getyTextOffset());
+		this.tfWebsite.setLayoutY(defaultFieldY + 240 +currentCard.getyTextOffset());
+		this.btn_0.setLayoutY(defaultFieldY + currentCard.getyTextOffset());
+		this.btn_1.setLayoutY(defaultFieldY + 60 + currentCard.getyTextOffset());
+		this.btn_2.setLayoutY(defaultFieldY + 120 + currentCard.getyTextOffset());
+		this.btn_3.setLayoutY(defaultFieldY + 180 + currentCard.getyTextOffset());
+		this.btn_4.setLayoutY(defaultFieldY + 240 + currentCard.getyTextOffset());
+		
+		this.label_0.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_1.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_2.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_3.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_4.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfName.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfAddress.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfPhone.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfEmail.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfWebsite.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.btn_0.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_1.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_2.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_3.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_4.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
 	}
 }

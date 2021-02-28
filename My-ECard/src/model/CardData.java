@@ -26,6 +26,7 @@ public class CardData implements Serializable {
 	private String address;
 	private String phone;
 	private String website;
+	private String filePath;
 	
 	public CardData() {
 		this.idImage = null;
@@ -35,12 +36,12 @@ public class CardData implements Serializable {
 		this.idColor = color;
 		double[] color2 = {0,0,0,1};
 		this.bgColor = color2;
-		this.name = "";
+		this.name = "NAME";
 		this.message = "";
-		this.email = "";
-		this.address = "";
-		this.phone = "";
-		this.website = "";
+		this.email = "EMAIL";
+		this.address = "ADDRESS";
+		this.phone = "PHONE";
+		this.website = "WEBSITE";
 		this.idRotation = 0;
 		this.fontSize = 25;
 		double[] color3 = {0,0,0,1};
@@ -48,6 +49,7 @@ public class CardData implements Serializable {
 		this.fontColor = color3;
 		this.xTextOffset = 0;
 		this.yTextOffset = 0;
+		this.filePath = null;
 	}
 	
 	public CardData(ImageData idImage, ImageData backgroundImage, String name, String message, String email,
@@ -205,6 +207,14 @@ public class CardData implements Serializable {
 
 	public void setyTextOffset(double yTextOffset) {
 		this.yTextOffset = yTextOffset;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	@Override
