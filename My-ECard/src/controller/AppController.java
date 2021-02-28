@@ -56,6 +56,12 @@ public class AppController {
 	ColorPicker bg_colorPicker;
 	@FXML
 	ColorPicker id_colorPicker;
+	@FXML
+	ColorPicker text_colorPicker;
+	
+	Color fontColor = javafx.scene.paint.Color.BLACK;
+	double defaultFieldX = 433.0;
+	double defaultFieldY = 431.0;
 
 	@FXML
 	TextField tfName;
@@ -94,6 +100,8 @@ public class AppController {
 	HBox bgOptionsContainer;
 	@FXML
 	HBox idOptionsContainer;
+	@FXML 
+	HBox textOptionsContainer;
 
 	public AppController() {
 		currentCard = new CardData();
@@ -198,21 +206,25 @@ public class AppController {
 		if (file != null) {
 			currentCard = DataUtil.load(file.getPath());
 			if (currentCard != null) {
+				
 				loadFields();
+				double[] textColor = currentCard.getFontColor();
+				this.updateTextColor(new Color(textColor[0],textColor[1],textColor[2],textColor[3]));
+				this.setFieldPossitions();
+				this.plusTextSize();
+				this.minusTextSize();
+				
 				byte[] idImageBytes = currentCard.getIdImage().getBytes();
 				InputStream is1 = new ByteArrayInputStream(idImageBytes);
 				Image idImage = new Image(is1);
 				id_image.setImage(idImage);
-				this.setIdCrop(idImage);
 				this.updateIdCrop();
+				
 				byte[] backgroundImageBytes = currentCard.getBackgroundImage().getBytes();
 				InputStream is2 = new ByteArrayInputStream(backgroundImageBytes);
 				Image backgroundImage = new Image(is2);
 				bg_image.setImage(backgroundImage);
-				this.setBgCrop(backgroundImage);
-				double[] bgImageCoords = currentCard.getBgImageCoords();
-				bg_image.setViewport(
-						new Rectangle2D(bgImageCoords[0], bgImageCoords[1], bgImageCoords[2], bgImageCoords[3]));
+				this.updateBgCrop();
 			}
 		}
 	}
@@ -226,13 +238,19 @@ public class AppController {
 		fc.getExtensionFilters().add(FXUtil.getDefaultExtFilter());
 		File file = fc.showSaveDialog(new Stage());
 		if (file != null) {
+			currentCard.setFilePath(file.getPath());
 			DataUtil.save(currentCard, file.getPath());
 		}
 	}
 
 	public void save(ActionEvent event) {
-		// TODO Needs a path to save to without FileChooser
-		FXUtil.showWIP();
+		if (currentCard.getFilePath() != null) {
+			DataUtil.save(currentCard, currentCard.getFilePath());
+		}
+		else {
+			saveAs(null);
+		}
+
 	}
 
 	public void exitApp(ActionEvent event) {
@@ -394,7 +412,8 @@ public class AppController {
 	}
 
 	public void onNameMouseExit() {
-		label_0.setTextFill(javafx.scene.paint.Color.BLACK);
+		label_0.setTextFill(fontColor);
+		
 	}
 
 	public void onAddressMouseEnter() {
@@ -402,7 +421,7 @@ public class AppController {
 	}
 
 	public void onAddressMouseExit() {
-		label_1.setTextFill(javafx.scene.paint.Color.BLACK);
+		label_1.setTextFill(fontColor);
 	}
 
 	public void onPhoneMouseEnter() {
@@ -410,7 +429,7 @@ public class AppController {
 	}
 
 	public void onPhoneMouseExit() {
-		label_2.setTextFill(javafx.scene.paint.Color.BLACK);
+		label_2.setTextFill(fontColor);
 	}
 
 	public void onEmailMouseEnter() {
@@ -418,7 +437,7 @@ public class AppController {
 	}
 
 	public void onEmailMouseExit() {
-		label_3.setTextFill(javafx.scene.paint.Color.BLACK);
+		label_3.setTextFill(fontColor);
 	}
 
 	public void onWebsiteMouseEnter() {
@@ -426,7 +445,7 @@ public class AppController {
 	}
 
 	public void onWebsiteMouseExit() {
-		label_4.setTextFill(javafx.scene.paint.Color.BLACK);
+		label_4.setTextFill(fontColor);
 	}
 
 	public void onExport() {
@@ -476,10 +495,11 @@ public class AppController {
 		g2.rotate(-Math.toRadians(id_image.getRotate()), id_image.getLayoutX() + (id_image.getFitWidth() * .5), id_image.getLayoutY() + (id_image.getFitHeight() * .5));
 		// draw text
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g2.setColor(new java.awt.Color(0, 0, 0));
-		g2.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		double[] textColor = currentCard.getFontColor(); 
+		g2.setColor(new java.awt.Color((int)(textColor[0] * 255.0), (int)(textColor[1] * 255.0), (int) (textColor[2] * 255.0)));
+		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize() + 4));
 		drawCenteredString(g2, label_0, g2.getFont());
-		g2.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		g2.setFont(new Font(currentCard.getFontName(), Font.PLAIN, currentCard.getFontSize()));
 		drawCenteredString(g2, label_1, g2.getFont());
 		drawCenteredString(g2, label_2, g2.getFont());
 		drawCenteredString(g2, label_3, g2.getFont());
@@ -709,5 +729,153 @@ public class AppController {
 			setIdCrop(image);
 		}
 		return currentCard.getIdImageCoords();
+	}
+	public void onClickTextOptions() {
+		if (this.textOptionsContainer.isVisible()) {
+			this.textOptionsContainer.setVisible(false);
+		} else {
+			this.textOptionsContainer.setVisible(true);
+		}
+	}
+	public void plusTextSize() {
+		currentCard.setFontSize(currentCard.getFontSize() + 1);
+		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + 4));
+		this.label_1.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+		this.label_2.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+		this.label_3.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+		this.label_4.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+	}
+
+	public void minusTextSize() {
+		currentCard.setFontSize(currentCard.getFontSize() - 1);
+		this.label_0.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize() + 4));
+		this.label_1.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+		this.label_2.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+		this.label_3.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+		this.label_4.setFont(new javafx.scene.text.Font("SansSerif", currentCard.getFontSize()));
+	}
+
+	public void shiftDownText() {
+		currentCard.setyTextOffset(currentCard.getyTextOffset() + 2);
+		this.label_0.setLayoutY(label_0.getLayoutY() + 2);
+		this.label_1.setLayoutY(label_1.getLayoutY() + 2);
+		this.label_2.setLayoutY(label_2.getLayoutY() + 2);
+		this.label_3.setLayoutY(label_3.getLayoutY() + 2);
+		this.label_4.setLayoutY(label_4.getLayoutY() + 2);
+		this.tfName.setLayoutY(tfName.getLayoutY() + 2);
+		this.tfAddress.setLayoutY(tfAddress.getLayoutY() + 2);
+		this.tfPhone.setLayoutY(tfPhone.getLayoutY() + 2);
+		this.tfEmail.setLayoutY(tfEmail.getLayoutY() + 2);
+		this.tfWebsite.setLayoutY(tfWebsite.getLayoutY() + 2);
+		this.btn_0.setLayoutY(btn_0.getLayoutY() + 2);
+		this.btn_1.setLayoutY(btn_1.getLayoutY() + 2);
+		this.btn_2.setLayoutY(btn_2.getLayoutY() + 2);
+		this.btn_3.setLayoutY(btn_3.getLayoutY() + 2);
+		this.btn_4.setLayoutY(btn_4.getLayoutY() + 2);
+	}
+
+	public void shiftUpText() {
+		currentCard.setyTextOffset(currentCard.getyTextOffset() - 2);
+		this.label_0.setLayoutY(label_0.getLayoutY() - 2);
+		this.label_1.setLayoutY(label_1.getLayoutY() - 2);
+		this.label_2.setLayoutY(label_2.getLayoutY() - 2);
+		this.label_3.setLayoutY(label_3.getLayoutY() - 2);
+		this.label_4.setLayoutY(label_4.getLayoutY() - 2);
+		this.tfName.setLayoutY(tfName.getLayoutY() - 2);
+		this.tfAddress.setLayoutY(tfAddress.getLayoutY() - 2);
+		this.tfPhone.setLayoutY(tfPhone.getLayoutY() - 2);
+		this.tfEmail.setLayoutY(tfEmail.getLayoutY() - 2);
+		this.tfWebsite.setLayoutY(tfWebsite.getLayoutY() - 2);
+		this.btn_0.setLayoutY(btn_0.getLayoutY() - 2);
+		this.btn_1.setLayoutY(btn_1.getLayoutY() - 2);
+		this.btn_2.setLayoutY(btn_2.getLayoutY() - 2);
+		this.btn_3.setLayoutY(btn_3.getLayoutY() - 2);
+		this.btn_4.setLayoutY(btn_4.getLayoutY() - 2);
+	}
+
+	public void shiftRightText() {
+
+		currentCard.setxTextOffset(currentCard.getxTextOffset() + 2);
+		this.label_0.setLayoutX(label_0.getLayoutX() + 2);
+		this.label_1.setLayoutX(label_1.getLayoutX() + 2);
+		this.label_2.setLayoutX(label_2.getLayoutX() + 2);
+		this.label_3.setLayoutX(label_3.getLayoutX() + 2);
+		this.label_4.setLayoutX(label_4.getLayoutX() + 2);
+		this.tfName.setLayoutX(tfName.getLayoutX() + 2);
+		this.tfAddress.setLayoutX(tfAddress.getLayoutX() + 2);
+		this.tfPhone.setLayoutX(tfPhone.getLayoutX() + 2);
+		this.tfEmail.setLayoutX(tfEmail.getLayoutX() + 2);
+		this.tfWebsite.setLayoutX(tfWebsite.getLayoutX() + 2);
+		this.btn_0.setLayoutX(btn_0.getLayoutX() + 2);
+		this.btn_1.setLayoutX(btn_1.getLayoutX() + 2);
+		this.btn_2.setLayoutX(btn_2.getLayoutX() + 2);
+		this.btn_3.setLayoutX(btn_3.getLayoutX() + 2);
+		this.btn_4.setLayoutX(btn_4.getLayoutX() + 2);
+	}
+
+	public void shiftLeftText() {
+		currentCard.setxTextOffset(currentCard.getxTextOffset() - 2);
+		this.label_0.setLayoutX(label_0.getLayoutX() - 2);
+		this.label_1.setLayoutX(label_1.getLayoutX() - 2);
+		this.label_2.setLayoutX(label_2.getLayoutX() - 2);
+		this.label_3.setLayoutX(label_3.getLayoutX() - 2);
+		this.label_4.setLayoutX(label_4.getLayoutX() - 2);
+		this.tfName.setLayoutX(tfName.getLayoutX() - 2);
+		this.tfAddress.setLayoutX(tfAddress.getLayoutX() - 2);
+		this.tfPhone.setLayoutX(tfPhone.getLayoutX() - 2);
+		this.tfEmail.setLayoutX(tfEmail.getLayoutX() - 2);
+		this.tfWebsite.setLayoutX(tfWebsite.getLayoutX() - 2);
+		this.btn_0.setLayoutX(btn_0.getLayoutX() - 2);
+		this.btn_1.setLayoutX(btn_1.getLayoutX() - 2);
+		this.btn_2.setLayoutX(btn_2.getLayoutX() - 2);
+		this.btn_3.setLayoutX(btn_3.getLayoutX() - 2);
+		this.btn_4.setLayoutX(btn_4.getLayoutX() - 2);
+	}
+	public void pickTextColor() {
+		fontColor = text_colorPicker.getValue();
+		updateTextColor(fontColor);
+		double[] color = { fontColor.getRed(), fontColor.getGreen(), fontColor.getBlue(), fontColor.getOpacity() };
+		currentCard.setFontColor(color);
+	}
+	public void updateTextColor(Color textColor) {
+		this.fontColor = textColor;
+		this.label_0.setTextFill(textColor);
+		this.label_1.setTextFill(textColor);
+		this.label_2.setTextFill(textColor);
+		this.label_3.setTextFill(textColor);
+		this.label_4.setTextFill(textColor);
+	}
+	public void setFieldPossitions() {
+		this.label_0.setLayoutY(defaultFieldY + currentCard.getyTextOffset());
+		this.label_1.setLayoutY(defaultFieldY + 60 + currentCard.getyTextOffset());
+		this.label_2.setLayoutY(defaultFieldY + 120 + currentCard.getyTextOffset());
+		this.label_3.setLayoutY(defaultFieldY + 180 + currentCard.getyTextOffset());
+		this.label_4.setLayoutY(defaultFieldY + 240 + currentCard.getyTextOffset());
+		this.tfName.setLayoutY(defaultFieldY + currentCard.getyTextOffset());
+		this.tfAddress.setLayoutY(defaultFieldY + 60 + currentCard.getyTextOffset());
+		this.tfPhone.setLayoutY(defaultFieldY + 120 +currentCard.getyTextOffset());
+		this.tfEmail.setLayoutY(defaultFieldY + 180 +currentCard.getyTextOffset());
+		this.tfWebsite.setLayoutY(defaultFieldY + 240 +currentCard.getyTextOffset());
+		this.btn_0.setLayoutY(defaultFieldY + currentCard.getyTextOffset());
+		this.btn_1.setLayoutY(defaultFieldY + 60 + currentCard.getyTextOffset());
+		this.btn_2.setLayoutY(defaultFieldY + 120 + currentCard.getyTextOffset());
+		this.btn_3.setLayoutY(defaultFieldY + 180 + currentCard.getyTextOffset());
+		this.btn_4.setLayoutY(defaultFieldY + 240 + currentCard.getyTextOffset());
+		
+		this.label_0.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_1.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_2.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_3.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.label_4.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfName.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfAddress.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfPhone.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfEmail.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.tfWebsite.setLayoutX(defaultFieldX + currentCard.getxTextOffset());
+		this.btn_0.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_1.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_2.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_3.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
+		this.btn_4.setLayoutX(defaultFieldX + currentCard.getxTextOffset() + 690);
 	}
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Font;
 import java.io.Serializable;
 
 import javafx.scene.paint.Color;
@@ -8,17 +9,24 @@ public class CardData implements Serializable {
 	private static final long serialVersionUID = 9107403793011513398L;
 	
 	private ImageData idImage;
-	double[] bgColor;
-	double[] bgImageCoords;
+	private double[] bgColor;
+	private double[] bgImageCoords;
 	private ImageData backgroundImage;
-	double[] idColor;
-	double[] idImageCoords;
+	private double[] idColor;
+	private double[] idImageCoords;
+	private int idRotation;
+	private String fontName;
+	private int fontSize;
+	private double[] fontColor;
+	private double xTextOffset;
+	private double yTextOffset;
 	private String name;
 	private String message;
 	private String email;
 	private String address;
 	private String phone;
 	private String website;
+	private String filePath;
 	
 	public CardData() {
 		this.idImage = null;
@@ -28,12 +36,20 @@ public class CardData implements Serializable {
 		this.idColor = color;
 		double[] color2 = {0,0,0,1};
 		this.bgColor = color2;
-		this.name = "";
+		this.name = "NAME";
 		this.message = "";
-		this.email = "";
-		this.address = "";
-		this.phone = "";
-		this.website = "";
+		this.email = "EMAIL";
+		this.address = "ADDRESS";
+		this.phone = "PHONE";
+		this.website = "WEBSITE";
+		this.idRotation = 0;
+		this.fontSize = 25;
+		double[] color3 = {0,0,0,1};
+		this.fontName = "SansSerif";
+		this.fontColor = color3;
+		this.xTextOffset = 0;
+		this.yTextOffset = 0;
+		this.filePath = null;
 	}
 	
 	public CardData(ImageData idImage, ImageData backgroundImage, String name, String message, String email,
@@ -143,6 +159,62 @@ public class CardData implements Serializable {
 
 	public void setIdImageCoords(double[] idImageCoords) {
 		this.idImageCoords = idImageCoords;
+	}
+
+	public int getIdRotation() {
+		return idRotation;
+	}
+
+	public void setIdRotation(int idRotation) {
+		this.idRotation = idRotation;
+	}
+
+	public String getFontName() {
+		return fontName;
+	}
+
+	public void setFontName(String fontName) {
+		this.fontName = fontName;
+	}
+
+	public int getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public double[] getFontColor() {
+		return fontColor;
+	}
+
+	public void setFontColor(double[] fontColor) {
+		this.fontColor = fontColor;
+	}
+
+	public double getxTextOffset() {
+		return xTextOffset;
+	}
+
+	public void setxTextOffset(double xTextOffset) {
+		this.xTextOffset = xTextOffset;
+	}
+
+	public double getyTextOffset() {
+		return yTextOffset;
+	}
+
+	public void setyTextOffset(double yTextOffset) {
+		this.yTextOffset = yTextOffset;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	@Override
