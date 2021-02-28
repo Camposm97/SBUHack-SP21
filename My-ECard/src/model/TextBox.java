@@ -4,6 +4,7 @@ import com.sun.istack.internal.NotNull;
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -20,13 +21,17 @@ public class TextBox {
     private DraggedCardData cardData;
     private TextData textData;
 
-    public TextBox(TextData textData, Group group) {
+    public TextBox(DraggedCardData draggedCardData, TextData textData, Group group) {
+        this.cardData = draggedCardData;
         this.textData = textData;
         this.group = group;
         this.parent = (Pane) group.getParent();
         this.label = new Label(textData.getText());
         this.label.setFont(Font.font(textData.getFontFamily(), textData.getFontSize()));
-        this.label.setTextFill(Color.web(textData.getHexColor()));
+        try {
+            this.label.setTextFill(Color.web(textData.getHexColor()));
+        } catch (Exception e) {
+        }
         this.label.setTranslateX(textData.getPosition().getX());
         this.label.setTranslateY(textData.getPosition().getY());
         loadConDetails();
@@ -60,6 +65,14 @@ public class TextBox {
         MenuItem item1 = new MenuItem("Change Font");
         MenuItem item2 = new MenuItem("Change Color");
         MenuItem item3 = new MenuItem("Delete");
+        MenuItem item4 = new MenuItem("Bring to Front");
+        MenuItem item5 = new MenuItem("Push to Back");
+        item5.setOnAction(e -> {
+            label.toBack();
+        });
+        item4.setOnAction(e -> {
+            label.toFront();
+        });
         item3.setOnAction(e -> {
             group.getChildren().remove(label);
             cardData.removeText(textData);
@@ -73,7 +86,7 @@ public class TextBox {
             textData.setFontFamily(label.getFont().getName());
             textData.setFontSize(label.getFont().getSize());
         });
-        contextMenu.getItems().addAll(item1, item2, item3);
+        contextMenu.getItems().addAll(item1, item2, item3, item4, item5);
         label.setContextMenu(contextMenu);
         label.setOnMousePressed(e -> {
             if (e.isPrimaryButtonDown()) {

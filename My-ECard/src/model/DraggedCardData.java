@@ -31,12 +31,12 @@ public class DraggedCardData implements Serializable {
         System.out.println(imageDataList.remove(imageData));
     }
 
-    public void display(Group group) {
+    public void display(DraggedCardData cardData, Group group) {
         for (TextData textData : textDataList) {
-            textData.display(group);
+            textData.display(cardData, group);
         }
         for (DraggedImageData imageData : imageDataList) {
-
+            imageData.display(cardData, group);
         }
     }
 

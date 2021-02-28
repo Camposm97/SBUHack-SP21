@@ -1,12 +1,15 @@
 package model;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Group;
 import workbench.ImageViewBox;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class DraggedImageData implements Serializable {
     private byte[] imageData;
@@ -30,7 +33,7 @@ public class DraggedImageData implements Serializable {
         this.position = position;
     }
 
-    public byte[] getImageData() {
+    public byte[] getBytes() {
         return imageData;
     }
 
@@ -44,5 +47,18 @@ public class DraggedImageData implements Serializable {
 
     public void setPosition(Point position) {
         this.position = position;
+    }
+
+    public void display(DraggedCardData cardData, Group group) {
+        ImageViewBox imageViewBox = new ImageViewBox(cardData, this, group);
+        System.out.println(toString());
+    }
+
+    @Override
+    public String toString() {
+        return "DraggedImageData{" +
+                "imageData=" + imageData +
+                ", position=" + position +
+                '}';
     }
 }

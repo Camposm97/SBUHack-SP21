@@ -46,7 +46,7 @@ public class DraggerController {
             currentCard = (DraggedCardData) DataUtil.loadObject(file.getPath());
             group.getChildren().clear();
             if (currentCard != null) {
-                currentCard.display(group);
+                currentCard.display(currentCard, group);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Failed to open file!");

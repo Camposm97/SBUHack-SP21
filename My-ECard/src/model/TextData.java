@@ -68,8 +68,8 @@ public class TextData implements Serializable {
         this.position = position;
     }
 
-    public void display(Group group) {
-        TextBox textBox = new TextBox(this, group);
+    public void display(DraggedCardData cardData, Group group) {
+        TextBox textBox = new TextBox(cardData, this, group);
         System.out.println(toString());
     }
 
