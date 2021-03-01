@@ -112,7 +112,10 @@ public class TextBox {
             double yCenter = label.getTranslateY() + label.getHeight() / 2.0;
             // Check if image is touching y-axis
             if (isNearAxis(xCenter, xHalfScene)) {
-                label.setTranslateX(xHalfScene - (label.getWidth() / 2.0));
+                newTranslateX = xHalfScene - (label.getWidth() / 2.0);
+                label.setTranslateX(newTranslateX);
+                textData.getPosition().setX(newTranslateX);
+
                 if (!group.getChildren().contains(yLine)) {
                     group.getChildren().add(yLine);
                 }
@@ -122,7 +125,10 @@ public class TextBox {
 
             // Check if image is touching x-axis
             if (isNearAxis(yCenter, yHalfScene)) {
-                label.setTranslateY(yHalfScene - (label.getHeight() / 2.0));
+                newTranslateY = yHalfScene - (label.getHeight()  / 2.0);
+                label.setTranslateY(newTranslateY);
+                textData.getPosition().setY(newTranslateY);
+
                 if (!group.getChildren().contains(xLine)) {
                     group.getChildren().add(xLine);
                 }

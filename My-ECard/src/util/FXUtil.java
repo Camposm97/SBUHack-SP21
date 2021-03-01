@@ -81,7 +81,6 @@ public class FXUtil {
 		Alert dialog = new Alert(AlertType.CONFIRMATION);
 		dialog.setTitle("Select Font");
 		dialog.setHeaderText("Select A Font");
-		System.out.println(Arrays.toString(FontWeight.values()));
 		ComboBox<String> cbFontNames = new ComboBox<>();
 		cbFontNames.getItems().addAll(Font.getFontNames());
 		ComboBox<Double> cbFontSizes = new ComboBox<>();

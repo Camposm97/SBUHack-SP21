@@ -34,6 +34,9 @@ public class ImageViewBox {
         InputStream is = new ByteArrayInputStream(imageData.getBytes());
         Image image = new Image(is);
         this.iv = new ImageView(image);
+//        this.iv.setX(this.imageData.getPosition().getX());
+//        this.iv.setY(this.imageData.getPosition().getY());
+        System.out.println(imageData.getPosition());
         this.iv.setTranslateX(this.imageData.getPosition().getX());
         this.iv.setTranslateY(this.imageData.getPosition().getY());
         loadConDetails();
@@ -101,18 +104,23 @@ public class ImageViewBox {
             double offsetY = e.getSceneY() - orgSceneY;
             double newTranslateX = orgTranslateX + offsetX;
             double newTranslateY = orgTranslateY + offsetY;
-
             iv.setTranslateX(newTranslateX);
             iv.setTranslateY(newTranslateY);
             imageData.getPosition().setX(newTranslateX);
             imageData.getPosition().setY(newTranslateY);
             double xHalfScene = parent.getWidth() / 2.0;
             double yHalfScene = parent.getHeight() / 2.0;
+
+            System.out.println("X: " + newTranslateX + " | Y: " + newTranslateY + " | X Scene/2: " + xHalfScene + " | Y Scene/2: " + yHalfScene);
+
+
             double xCenter = iv.getTranslateX() + iv.getFitWidth() / 2.0;
             double yCenter = iv.getTranslateY() + iv.getFitHeight() / 2.0;
             // Check if image is touching y-axis
             if (isNearAxis(xCenter, xHalfScene)) {
-                iv.setTranslateX(xHalfScene - (iv.getFitWidth() / 2.0));
+                newTranslateX = xHalfScene - (iv.getFitWidth() / 2.0);
+                iv.setTranslateX(newTranslateX);
+                imageData.getPosition().setX(newTranslateX);
                 if (!group.getChildren().contains(yLine)) {
                     group.getChildren().add(yLine);
                 }
@@ -122,7 +130,10 @@ public class ImageViewBox {
 
             // Check if image is touching x-axis
             if (isNearAxis(yCenter, yHalfScene)) {
-                iv.setTranslateY(yHalfScene - (iv.getFitHeight() / 2.0));
+                newTranslateY = yHalfScene - (iv.getFitHeight()  / 2.0);
+                iv.setTranslateY(newTranslateY);
+                imageData.getPosition().setY(newTranslateY);
+
                 if (!group.getChildren().contains(xLine)) {
                     group.getChildren().add(xLine);
                 }
